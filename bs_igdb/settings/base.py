@@ -121,6 +121,7 @@ WSGI_APPLICATION = 'bs_igdb03.wsgi.application'
 TEMPLATE_DIRS = (
     os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../..', 'templates')),
     os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../../bs_igdbview', 'templates')),
+    os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../../templates', 'templates')),
 
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -140,6 +141,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',

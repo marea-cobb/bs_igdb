@@ -1,0 +1,92 @@
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+    <h1>IgBlast Result</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Reult Id</th>
+            <th>DB Queried</th>
+            <th>Query</th>
+            <th>Length</th>
+            <th>Summary ID</th>
+            <th>Junction ID</th>
+            <th>Alignment ID</th>
+            <th>Sequence ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for res in results %}
+                <td>{{ res.result_id }}</td>
+                <td>{{ res.db_queried }}</td>
+                <td>{{ res.query }}</td>
+                <td>{{ res.length }}</td>
+                <td>{{ res.igblast_summary_id }}</td>
+                <td>{{ res.junction_summary_id }}</td>
+                <td>{{ res.alignment_summary_id }}</td>
+                <td>{{ res.sequence_id }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if results.has_previous %}
+            <a href="?page={{ res.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ results.number }} of {{ results.paginator.num_pages }}.
+        </span>
+
+        {% if results.has_next %}
+            <a href="?page={{ results.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+    {#    <ul>#}
+    {#        <TABLE id="viewtable">#}
+    {#            <TR>#}
+    {#                <TH>Result Ids</TH>#}
+    {#                <TH>DB_Queried</TH>#}
+    {#                <TH>Query</TH>#}
+    {#                <TH>Length</TH>#}
+    {#                <TH>Summary ID</TH>#}
+    {#                <TH>Junction ID</TH>#}
+    {#                <TH>Alignment ID</TH>#}
+    {#                <TH>Sequence ID</TH>#}
+    {#            </TR>#}
+    {#            {% for res in result_list %}#}
+    {#                <TR><TD><input type="checkbox" name="resid" value = {{ res.result_id }} >{{ res.result_id }}</TD>#}
+    {#                    <TD>{{ res.db_queried }}</TD>#}
+    {#                    <TD>{{ res.query }}</TD>#}
+    {#                    <TD>{{ res.length }}</TD>#}
+    {#                    <TD>{{ res.igblast_summary_id }}</TD>#}
+    {#                    <TD>{{ res.junction_summary_id }}</TD>#}
+    {#                    <TD>{{ res.alignment_summary_id }}</TD>#}
+    {#                    <TD>{{ res.sequence_id }}</TD>#}
+    {#                </TR>#}
+    {#            {% endfor %}#}
+    {#        </TABLE>#}
+    {#    </ul>#}
+    {##}
+    {#    <ul class="pagination">#}
+    {#        <li><a href="#">&laquo;</a></li>#}
+    {#        <li><a href="#">1</a></li>#}
+    {#        <li><a href="#">2</a></li>#}
+    {#        <li><a href="#">3</a></li>#}
+    {#        <li><a href="#">4</a></li>#}
+    {#        <li><a href="#">5</a></li>#}
+    {#        <li><a href="#">&raquo;</a></li>#}
+    {#    </ul>#}
+
+
+
+    {#<ul>#}
+    {#    {% for result in result_list %}#}
+    {#        <li class="result">{{  result }} </li>#}
+    {#    {% endfor %}#}
+    {#</ul>#}
+{% endblock %}

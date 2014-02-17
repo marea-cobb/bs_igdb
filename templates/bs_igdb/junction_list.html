@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+    <h1>IgBlast Junction Summary</h1>
+
+     <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+        <tr>
+            <th class="col-xs-1 text-center">Junction Id</th>
+            <th class="col-xs-1 text-center">V-end</th>
+            <th class="col-xs-2 text-center">V-D Junction</th>
+            <th class="col-xs-2 text-center">D-region</th>
+            <th class="col-xs-2 text-center">D-J Junction</th>
+            <th class="col-xs-1 text-center">J-Start</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for junct in junctions %}
+                <td class="text-center">{{ junct.junction_id }}</td>
+                <td>{{ junct.v_end }}</td>
+                <td>{{ junct.vd_junction }}</td>
+                <td>{{ junct.d_region }}</td>
+                <td>{{ junct.dj_junction }}</td>
+                <td>{{ junct.j_start}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if junctions.has_previous %}
+            <a href="?page={{ junct.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ junctions.number }} of {{ junctions.paginator.num_pages }}.
+        </span>
+
+        {% if junctions.has_next %}
+            <a href="?page={{ junctions.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+
+{% endblock %}

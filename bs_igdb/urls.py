@@ -8,11 +8,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'bs_igdb.views.home', name='home'),
     url(r'^bs_igdb/result', 'bs_igdbview.views.result'),
-    # url(r'^result/', 'bs_igdbview.views.result'),
+    url(r'^bs_igdb/junction', 'bs_igdbview.views.junction'),
+    url(r'^bs_igdb/summary', 'bs_igdbview.views.summary'),
+    url(r'^bs_igdb/sequence', 'bs_igdbview.views.sequence'),
+    url(r'^bs_igdb/alignment', 'bs_igdbview.views.alignment'),
     url(r'^bs_igdb/', bs_igdbview.views.dashboard),
-
+    url(r'^$', bs_igdbview.views.dashboard),
 
     # url(r'^library/', bs_igdbview.views.ListLibraryView.as_view(), name='library-list',),
     # url(r'^admin/', include(templates.admin))

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+    <h1>IgBlast Alignment Summary</h1>
+
+        <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+        <tr>
+            <th class="col-xs-2 text-center">Alignment Id</th>
+            <th class="col-xs-2 text-center">V-gene</th>
+            <th class="col-xs-2 text-center">Start Position</th>
+            <th class="col-xs-2 text-center">Stop Position</th>
+            <th class="col-xs-2 text-center">Length</th>
+            <th class="col-xs-2 text-center">Matches</th>
+            <th class="col-xs-3 text-center">Mismatches</th>
+            <th class="col-xs-2 text-center">Gaps</th>
+            <th class="col-xs-2 text-center">Percent Identity</th>
+            <th class="col-xs-10 text-center">Translation Query</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for align in alignments %}
+                <td class="text-center">{{ align.alignment_id }}</td>
+                <td class="text-center">{{ align.v_gene }}</td>
+                <td class="text-center">{{ align.start_position }}</td>
+                <td class="text-center">{{ align.stop_position }}</td>
+                <td class="text-center">{{ align.length }}</td>
+                <td class="text-center">{{ align.matches }}</td>
+                <td class="text-center">{{ align.mistmatches }}</td>
+                <td class="text-center">{{ align.gaps }}</td>
+                <td class="text-center">{{ align.percent_identity }}</td>
+                <td>{{ align.translation_query }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if alignments.has_previous %}
+            <a href="?page={{ align.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ alignments.number }} of {{ alignments.paginator.num_pages }}.
+        </span>
+
+        {% if alignments.has_next %}
+            <a href="?page={{ alignments.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+
+{% endblock %}

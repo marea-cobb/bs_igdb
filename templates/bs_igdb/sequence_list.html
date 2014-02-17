@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+    <h1>Sequences</h1>
+
+{#    <div class="table-responsive">#}
+        <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+            <thead>
+            <tr>
+                <th class="col-xs-2 text-center">Sequence Id</th>
+                <th class="col-xs-3 text-center">Sequence Name</th>
+                <th class="col-xs-10 text-center">Sequence</th>
+                <th class="col-xs-3 text-center">Sequence Type</th>
+                <th class="col-xs-2 text-center">Size</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for seq in sequences %}
+                    <td class="text-center">{{ seq.sequence_id }}</td>
+                    <td class="text-center">{{ seq.sequence_name }}</td>
+                    <td>{{ seq.fasta_sequence }}</td>
+                    <td class="text-center">{{ seq.fasta_type }}</td>
+                    <td class="text-center">{{ seq.size }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{#    </div>#}
+    <div class="pagination">
+    <span class="step-links">
+        {% if sequences.has_previous %}
+            <a href="?page={{ seq.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ sequences.number }} of {{ sequences.paginator.num_pages }}.
+        </span>
+
+        {% if sequences.has_next %}
+            <a href="?page={{ sequences.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+
+{% endblock %}

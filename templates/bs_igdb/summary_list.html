@@ -1,0 +1,51 @@
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+    <h1>IgBlast Summary</h1>
+
+        <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+        <tr>
+            <th class="col-xs-1 text-center"><a href="?order_by=summary_id">Summary Id</a></th>
+            <th class="col-xs-3 text-center"><a href="?order_by=v_match">V-match</a></th>
+            <th class="col-xs-3 text-center"><a href="?order_by=d_match">D-match</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=j_match">J-match</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=chain_type">Chain Type</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=stop_codon">Stop Codon</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=vj_frame">V-J Frame</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=productive">Productive</a></th>
+            <th class="col-xs-1 text-center"><a href="?order_by=strand">Strand</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for sums in summaries %}
+                <td class="text-center">{{ sums.summary_id }}</td>
+                <td>{{ sums.v_match }}</td>
+                <td>{{ sums.d_match }}</td>
+                <td>{{ sums.j_match }}</td>
+                <td class="text-center">{{ sums.chain_type }}</td>
+                <td class="text-center">{{ sums.stop_codon}}</td>
+                <td class="text-center">{{ sums.vj_frame }}</td>
+                <td class="text-center">{{ sums.productive }}</td>
+                <td class="text-center">{{ sums.strand }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if summaries.has_previous %}
+            <a href="?page={{ sums.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ summaries.number }} of {{ summaries.paginator.num_pages }}.
+        </span>
+
+        {% if summaries.has_next %}
+            <a href="?page={{ summaries.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+{% endblock %}

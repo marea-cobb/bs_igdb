@@ -2,17 +2,48 @@
 {% extends "bs_igdb/dashboard.html" %}
 
 {% block content %}
-    <h1>IgBlast Junction Summary</h1>
+    <head>
+        <h1>IgBlast Junction Summary</h1>
 
-     <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <form id='search' action='search/junction' method="get">
+                <div class="input-group">
+                    <select id="att" class="selectpicker" name="att" title="Select One">
+                        <option id="v_end">V End</option>
+                        <option id="vd_junction">VD Junction</option>
+                        <option id="d_region">D Region</option>
+                        <option id="dj_junction">DJ Junction</option>
+                        <option id="j_start">J-Start</option>
+                    </select>
+                    <div class="col-lg-6">
+                        <input type="text" name="s" class="form-control">
+                    </div><!-- /.col-lg-6 -->
+                    <span class="input-group-btn">
+                    <button id="submit" class="btn btn-default" type="submit">Search</button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </ul>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>
+        <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
         <thead>
         <tr>
-            <th class="col-xs-1 text-center">Junction Id</th>
-            <th class="col-xs-1 text-center">V-end</th>
-            <th class="col-xs-2 text-center">V-D Junction</th>
-            <th class="col-xs-2 text-center">D-region</th>
-            <th class="col-xs-2 text-center">D-J Junction</th>
-            <th class="col-xs-1 text-center">J-Start</th>
+            <th class="col-xs-1 text-center"><a href="?order_by=junction_id">Junction Id</a></th>
+            <th class="col-xs-1 text-center"><a href="?order_by=v_end">V-end</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=vd_junction">V-D Junction</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=d_region">D-region</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=dj_junction">D-J Junction</a></th>
+            <th class="col-xs-1 text-center"><a href="?order_by=j_start">J-Start</a></th>
         </tr>
         </thead>
         <tbody>

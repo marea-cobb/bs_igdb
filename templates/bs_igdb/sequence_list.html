@@ -2,17 +2,47 @@
 {% extends "bs_igdb/dashboard.html" %}
 
 {% block content %}
+    <head>
     <h1>Sequences</h1>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+    </head>
 
-{#    <div class="table-responsive">#}
+
+    <body>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <form id='search' action='search/sequence' method="get">
+                <div class="input-group">
+                    <select id="att" class="selectpicker" name="att" title="Select One">
+                        <option id="sequence_name">Sequence Name</option>
+                        <option id="sequence">Sequence</option>
+                        <option id="sequence_type">Sequence Type</option>
+                        <option id="size">Size</option>
+                    </select>
+                    <div class="col-lg-6">
+                        <input type="text" name="s" class="form-control">
+                    </div><!-- /.col-lg-6 -->
+                    <span class="input-group-btn">
+                    <button id="submit" class="btn btn-default" type="submit">Search</button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </ul>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>
+
         <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
             <thead>
             <tr>
-                <th class="col-xs-2 text-center">Sequence Id</th>
-                <th class="col-xs-3 text-center">Sequence Name</th>
-                <th class="col-xs-10 text-center">Sequence</th>
-                <th class="col-xs-3 text-center">Sequence Type</th>
-                <th class="col-xs-2 text-center">Size</th>
+                <th class="col-xs-2 text-center"><a href="?order_by=sequence_id">Sequence Id</a></th>
+                <th class="col-xs-3 text-center"><a href="?order_by=sequence_name">Sequence Name</a></th>
+                <th class="col-xs-10 text-center"><a href="?order_by=fasta_sequence">Sequence</a></th>
+                <th class="col-xs-3 text-center"><a href="?order_by=fasta_type">Sequence Type</a></th>
+                <th class="col-xs-2 text-center"><a href="?order_by=size">Size</a></th>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +57,6 @@
                 {% endfor %}
             </tbody>
         </table>
-{#    </div>#}
     <div class="pagination">
     <span class="step-links">
         {% if sequences.has_previous %}

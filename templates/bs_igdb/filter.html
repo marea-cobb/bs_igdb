@@ -1,36 +1,37 @@
-{% extends "bs_igdb/dashboard.html" %}
+{% extends "bs_igdb/summary_list.html" %}
 {% block content %}
-    <head>
-        <h1>IgBlast Summary</h1>
-
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
-    </head>
-
-    <body>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            <form id='search' action='search/summary' method="get">
-                <div class="input-group">
-                    <select id="att" class="selectpicker" name="att" title="Select One">
-                        <option id="v_match">V Match</option>
-                        <option id="d_match">D Match</option>
-                        <option id="j_match">J Match</option>
-                        <option id="chain_type">Chain Type</option>
-                        <option id="stop_codon">Stop Codon</option>
-                        <option id="vj_frame">V-J Frame</option>
-                        <option id="productive">Productive</option>
-                        <option id="strand">Strand</option>
-                    </select>
-                    <div class="col-lg-6">
-                        <input type="text" name="s" class="form-control">
-                    </div><!-- /.col-lg-6 -->
-                    <span class="input-group-btn">
-                    <button id="submit" class="btn btn-default" type="submit">Search</button>
-                    </span>
-                </div><!-- /input-group -->
-            </form>
+{# <div class="collapse navbar-collapse navbar-ex1-collapse">#}
+{#        <ul class="nav navbar-nav">#}
+{##}
+{#            <script>#}
+{#                $("#search").ready(function(){#}
+{#                    $("#submit").click(function(){#}
+{#                        $.ajax({#}
+{#                            url: "/search/",#}
+{#                            type: "get",#}
+{#                            success: function(data){#}
+{#                                $('submit').html(data)#}
+{#                            },#}
+{#                            dataType: 'JSON'#}
+{#                        });#}
+{#                    });#}
+{#                });#}
+            </script>
+{#            <form id='search' action="search" method="get">#}
+{#                <select class="selectpicker" title="Select One">#}
+{#                    <option>D Match</option>#}
+{#                    <option>J Match</option>#}
+{#                    <option>Productive</option>#}
+{#                </select>#}
+{#                <div class="col-lg-6">#}
+{#                    <div class="input-group">#}
+{#                        <input type="text" name="s" class="form-control">#}
+{#                <span class="input-group-btn">#}
+{#                <button id="submit" class="btn btn-default" type="submit">Go!</button>#}
+{#                 </span>#}
+{#                    </div><!-- /input-group -->#}
+{#                </div><!-- /.col-lg-6 -->#}
+{#            </form>#}
         </ul>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -83,11 +84,4 @@
         {% endif %}
     </span>
     </div>
-
-    {#    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>#}
-    {#    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>#}
-    {#    <script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>#}
-    {#    <script src="src/jquery.filterable.js"></script>#}
-
-
 {% endblock %}

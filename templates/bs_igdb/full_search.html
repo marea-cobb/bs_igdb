@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+ <head>
+        <h1>Search</h1>
+
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+    </head>
+
+  <body>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <form id='search' action='search/alignment2' method="get">
+                <div class="input-group">
+                    <select id="att" class="selectpicker" name="att" title="Select One">
+                        <option id="v_gene">V Gene</option>
+                        <option id="start_position">Start Position</option>
+                        <option id="stop_position">Stop Position</option>
+                        <option id="length">Length</option>
+                        <option id="matches">Matches</option>
+                        <option id="mismatches">Mismatches</option>
+                        <option id="gaps">Gaps</option>
+                        <option id="percent_identity">Percent Identity</option>
+                        <option id="translation_query">Translation Query</option>
+                    </select>
+                    <div class="col-lg-6">
+                        <input type="text" name="s" class="form-control">
+                    </div><!-- /.col-lg-6 -->
+                    <span class="input-group-btn">
+                    <button id="submit" class="btn btn-default" type="submit">Search</button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </ul>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>

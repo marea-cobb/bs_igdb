@@ -1,42 +1,166 @@
-<!DOCTYPE html>
-
 {% extends "bs_igdb/dashboard.html" %}
 
 {% block content %}
- <head>
+    <head>
         <h1>Search</h1>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
         <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
         <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <script src="assets/js/bootstrap-dropdown.js"></script>
+
+        <script>
+            $('#selected').prop('selected', true);
+            $('.selectpicker').selectpicker('render');
+        </script>
     </head>
 
-  <body>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            <form id='search' action='search/alignment2' method="get">
+    <body>
+    <form id="checkbox" action="full_search/results" method="get">
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="input-group">
-                    <select id="att" class="selectpicker" name="att" title="Select One">
-                        <option id="v_gene">V Gene</option>
-                        <option id="start_position">Start Position</option>
-                        <option id="stop_position">Stop Position</option>
-                        <option id="length">Length</option>
-                        <option id="matches">Matches</option>
-                        <option id="mismatches">Mismatches</option>
-                        <option id="gaps">Gaps</option>
-                        <option id="percent_identity">Percent Identity</option>
-                        <option id="translation_query">Translation Query</option>
-                    </select>
-                    <div class="col-lg-6">
-                        <input type="text" name="s" class="form-control">
-                    </div><!-- /.col-lg-6 -->
-                    <span class="input-group-btn">
-                    <button id="submit" class="btn btn-default" type="submit">Search</button>
-                    </span>
-                </div><!-- /input-group -->
-            </form>
-        </ul>
-    </div>
+                    <div class="input-group-addon">
+                        <div class="col-sm-1">
+                            <label>
+                                <input type="checkbox" name="check" > Result
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-group-addon">
+                        <div class="col-sm-1">
+                            <select id="att" class="selectpicker" name="att" title="Select One">
+                                <option id="v_match">DB Queried</option>
+                                <option id="d_match">Query</option>
+                                <option id="j_match">Length</option>
+                                <option id="chain_type">Summary ID</option>
+                                <option id="stop_codon">Junction ID</option>
+                                <option id="vj_frame">Alignment ID</option>
+                                <option id="productive">Sequence ID</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" name="result">
+                </div>
+            </div><!-- /input-group -->
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <div class="col-sm-1">
+                            <label>
+                                <input type="checkbox" name="check" > Summary
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-group-addon">
+                        <div class="col-sm-1">
+                            <select id="att" class="selectpicker" name="att" title="Select One">
+                                <option id="v_match">V Match</option>
+                                <option id="d_match">D Match</option>
+                                <option id="j_match">J Match</option>
+                                <option id="chain_type">Chain Type</option>
+                                <option id="stop_codon">Stop Codon</option>
+                                <option id="vj_frame">V-J Frame</option>
+                                <option id="productive">Productive</option>
+                                <option id="strand">Strand</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" name="summary">
+                </div>
+            </div>
+        </div><!-- /input-group -->
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <label>
+                            <input name="check" type="checkbox"> Junction
+                        </label>
+                    </div>
+                    <div class="input-group-addon">
+                        <select id="att" class="selectpicker" name="att" title="Select One">
+                            <option id="v_end">V End</option>
+                            <option id="vd_junction">VD Junction</option>
+                            <option id="d_region">D Region</option>
+                            <option id="dj_junction">DJ Junction</option>
+                            <option id="j_start">J-Start</option>
+                        </select>
+                    </div>
+                    <input type="text" class="form-control" name="junction">
+                </div>
+            </div><!-- /input-group -->
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <label>
+                            <input type="checkbox"> Sequence
+                        </label>
+                    </div>
+                    <div class="input-group-addon">
+                        <select id="att" class="selectpicker" name="att" title="Select One">
+                            <option id="sequence_name">Sequence Name</option>
+                            <option id="sequence">Sequence</option>
+                            <option id="sequence_type">Sequence Type</option>
+                            <option id="size">Size</option>
+                        </select>
+                    </div>
+                    <input type="text" name="sequence" class="form-control">
+                </div>
+            </div><!-- /input-group -->
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <label>
+                            <input type="checkbox"> Alignment
+                        </label>
+                    </div>
+                    <div class="input-group-addon">
+                        <select id="align_att" class="selectpicker" name="att" title="Select One">
+                            <option id="v_gene">V Gene</option>
+                            <option id="start_position">Start Position</option>
+                            <option id="stop_position">Stop Position</option>
+                            <option id="length">Length</option>
+                            <option id="matches">Matches</option>
+                            <option id="mismatches">Mismatches</option>
+                            <option id="gaps">Gaps</option>
+                            <option id="percent_identity">Percent Identity</option>
+                            <option id="translation_query">Translation Query</option>
+                        </select>
+                    </div>
+                    <input type="text" class="form-control" name="alignment">
+                </div>
+            </div><!-- /input-group -->
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                        <span class="input-group-btn">
+                        <button id="submit" class="btn btn-default" type="submit">Search</button>
+                        </span>
+            </div>
+        </div>
+    </form>
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     </body>
+
+{% endblock %}

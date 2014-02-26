@@ -8,8 +8,37 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="twitter-bootstrap-v2/docs/assets/js/bootstrap-dropdown.js"></script>
+
+
 
 {%  block navagation %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+{#    <script>#}
+{#        $(document).ready(function() {#}
+{#            $('ul.dropdown-menu > a').dropdown();#}
+{#        });#}
+{#    </script>#}
+
+{#    <script>#}
+{#        ul.nav li.dropdown:hover ul.dropdown-menu {#}
+{#            display: block;#}
+{#        };#}
+{#    </script>#}
+
+{#    <script>#}
+{#        $(function() {#}
+{#            $('ul.nav li.dropdown').dropdown(function() {#}
+{#                $('.dropdown-menu', this).fadeIn('fast');#}
+{#            }, function() {#}
+{#                $('.dropdown-menu', this).fadeOut('fast');#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+
     <div class='navbar navbar-inverse navbar-default' role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -20,7 +49,16 @@
                     <li id="junction"><a href="junction">Junction</a></li>
                     <li id="sequence"><a href="sequence">Sequence</a></li>
                     <li id="alignment"><a href="alignment">Alignment</a></li>
-                    <li id="Search"><a href="full_search">Search</a></li>
+                    <li class="dropdown" >
+                        <a data-toggle="dropdown" href="search">Search<span class="caret"></span></a>
+                        {#                        <ul class="dropdown-toggle" data-toggle="dropdown">#}
+                        <ul class="dropdown-menu" data-toggle="dropdown">
+                            <li><a href="search">Sequence Queries</a></li>
+                            <li><a href="search">IgBlast Queries</a></li>
+                            <li><a href="search">Immunogen Queries</a></li>
+                        </ul>
+                        {#                        </ul>#}
+                    </li>
                 </ul>
             </div>
         </div>

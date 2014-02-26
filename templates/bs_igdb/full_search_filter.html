@@ -1,0 +1,21 @@
+{% extends "bs_igdb/dashboard.html" %}
+
+{% block content %}
+    <head>
+        <h1>Search</h1>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <script src="assets/js/bootstrap-dropdown.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown();
+            });
+        </script>
+
+    </head>
+
+{% endblock %}

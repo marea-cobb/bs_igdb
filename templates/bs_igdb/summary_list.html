@@ -8,159 +8,50 @@
         <!-- load jQuery and tablesorter scripts -->
         <script type="text/javascript" src="/path/to/jquery-latest.js"></script>
         <script type="text/javascript" src="/Users/mcobb/Documents/djangoProjects/bs_igdb/bs_igdbview/static/bootstrap/js/tablesorter/js/jquery.tablesorter.js"></script>
-
-        <!-- tablesorter widgets (optional) -->
-        <script type="text/javascript" src="/path/to/jquery.tablesorter.widgets.js"></script>
-        <!-- Required for tablesorter -->
-        <link rel="stylesheet" href="../css/theme.bootstrap.css">
-        <script src="../js/jquery.tablesorter.js"></script>
-        <script src="../js/jquery.tablesorter.widgets.js"></script>
-        <link rel="stylesheet" href="../addons/pager/jquery.tablesorter.pager.css">
-        <script src="../addons/pager/jquery.tablesorter.pager.js"></script>
-
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
-
-
-        {#        <link href="http://netdna.bootstrapcdn.com/"<a href="http://www.jqueryscript.net/tags.php?/twitter/">twitter</a>"-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">#}
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
-
-        <!-- Demo stuff -->
-        <link rel="stylesheet" href="css/jq.css">
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-        <link href="css/prettify.css" rel="stylesheet">
-        <script src="js/prettify.js"></script>
-        <script src="js/docs.js"></script>
-
-        <script>
-            $(function() {
-
-                $.extend($.tablesorter.themes.bootstrap, {
-                    // these classes are added to the table. To see other table classes available,
-                    // look here: http://twitter.github.com/bootstrap/base-css.html#tables
-                    table      : 'table table-bordered',
-                    caption    : 'caption',
-                    header     : 'bootstrap-header', // give the header a gradient background
-                    footerRow  : '',
-                    footerCells: '',
-                    icons      : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
-                    sortNone   : 'bootstrap-icon-unsorted',
-                    sortAsc    : 'icon-chevron-up glyphicon glyphicon-chevron-up',     // includes classes for Bootstrap v2 & v3
-                    sortDesc   : 'icon-chevron-down glyphicon glyphicon-chevron-down', // includes classes for Bootstrap v2 & v3
-                    active     : '', // applied when column is sorted
-                    hover      : '', // use custom css here - bootstrap class may not override it
-                    filterRow  : '', // filter row class
-                    even       : '', // odd row zebra striping
-                    odd        : ''  // even row zebra striping
-                });
-
-                // call the tablesorter plugin and apply the uitheme widget
-                $("table").tablesorter({
-                    // this will apply the bootstrap theme if "uitheme" widget is included
-                    // the widgetOptions.uitheme is no longer required to be set
-                    theme : "bootstrap",
-
-                    widthFixed: true,
-
-                    headerTemplate : '{content} {icon}', // new in v2.7. Needed to add the bootstrap icon!
-
-                    // widget code contained in the jquery.tablesorter.widgets.js file
-                    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
-                    widgets : [ "uitheme", "filter", "zebra" ],
-
-                    widgetOptions : {
-                        // using the default zebra striping class name, so it actually isn't included in the theme variable above
-                        // this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
-                        zebra : ["even", "odd"],
-
-                        // reset filters button
-                        filter_reset : ".reset"
-
-                        // set the uitheme widget to use the bootstrap theme class names
-                        // this is no longer required, if theme is set
-                        // ,uitheme : "bootstrap"
-
-                    }
-                })
-                        .tablesorterPager({
-
-                            // target the pager markup - see the HTML block below
-                            container: $(".ts-pager"),
-
-                            // target the pager page select dropdown - choose a page
-                            cssGoto  : ".pagenum",
-
-                            // remove rows from the table to speed up the sort of large tables.
-                            // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
-                            removeRows: false,
-
-                            // output string - default is '{page}/{totalPages}';
-                            // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
-
-                        });
-
-            });
-        </script>
-
-
     </head>
 
 
-
-    {#    <body>#}
-    {#    <div class="collapse navbar-collapse navbar-ex1-collapse">#}
-    {#        <ul class="nav navbar-nav">#}
-    {#            <form id='search' action='search/summary' method="get">#}
-    {#                <div class="input-group">#}
-    {#                    <select id="att" class="selectpicker" name="att" title="Select One">#}
-    {#                        <option id="v_match">V Match</option>#}
-    {#                        <option id="d_match">D Match</option>#}
-    {#                        <option id="j_match">J Match</option>#}
-    {#                        <option id="chain_type">Chain Type</option>#}
-    {#                        <option id="stop_codon">Stop Codon</option>#}
-    {#                        <option id="vj_frame">V-J Frame</option>#}
-    {#                        <option id="productive">Productive</option>#}
-    {#                        <option id="strand">Strand</option>#}
-    {#                    </select>#}
-    {#                    <div class="col-lg-6">#}
-    {#                        <input type="text" name="s" class="form-control">#}
-    {#                    </div><!-- /.col-lg-6 -->#}
-    {#                    <span class="input-group-btn">#}
-    {#                    <button id="submit" class="btn btn-default" type="submit">Search</button>#}
-    {#                    </span>#}
-    {#                </div><!-- /input-group -->#}
-    {#            </form>#}
-    {#        </ul>#}
-    {#    </div>#}
-    {#    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>#}
-    {#    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>#}
-    {#    </body>#}
-
-    <h1>Demo</h1>
-    <!-- use the filter_reset : '.reset' option or include data-filter="" using the filter button demo code to reset the filters -->
-    <div class="bootstrap_buttons">
-        Reset filter : <button type="button" class="reset btn btn-primary" data-column="0" data-filter=""><i class="icon-white icon-refresh glyphicon glyphicon-refresh"></i> Reset filters</button>
-        <br>
-        Zebra widget : <button type="button" class="zebra btn btn-success"><i class="icon-white icon-ok glyphicon glyphicon-ok"></i> <span>enabled</span></button>
+    <body>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <form id='search' action='/search/summary' method="get">
+                <div class="input-group">
+                    <select id="att" class="selectpicker" name="att" title="Select One">
+                        <option id="v_match">V Match</option>
+                        <option id="d_match">D Match</option>
+                        <option id="j_match">J Match</option>
+                        <option id="chain_type">Chain Type</option>
+                        <option id="stop_codon">Stop Codon</option>
+                        <option id="vj_frame">V-J Frame</option>
+                        <option id="productive">Productive</option>
+                        <option id="strand">Strand</option>
+                    </select>
+                    <div class="col-lg-6">
+                        <input type="text" name="s" class="form-control">
+                    </div><!-- /.col-lg-6 -->
+                        <span class="input-group-btn">
+                        <button id="submit" class="btn btn-default" type="submit">Search</button>
+                        </span>
+                </div><!-- /input-group -->
+            </form>
+        </ul>
     </div>
-    <br>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>
 
-    <div id="demo"><table class="tablesorter">
-        {#            <th class="col-xs-1 text-center"><a href="?order_by=summary_id">Summary Id</a></th>#}
-        <th>Summary Id</th>
-        <th class="col-xs-3 text-center"><a href="?order_by=v_match">V-match</a></th>
-        <th class="col-xs-3 text-center"><a href="?order_by=d_match">D-match</a></th>
-        <th class="col-xs-2 text-center"><a href="?order_by=j_match">J-match</a></th>
-        <th class="col-xs-2 text-center"><a href="?order_by=chain_type">Chain Type</a></th>
-        {#            <th class="col-xs-2 text-center"><a href="?order_by=stop_codon">Stop Codon</a></th>#}
-        <th class="filter-select filter-exact" data-placeholder="Pick an option">Stop Codon</th>
-        <th class="col-xs-2 text-center"><a href="?order_by=vj_frame">V-J Frame</a></th>
-        <th class="col-xs-2 text-center"><a href="?order_by=productive">Productive</a></th>
-        <th class="col-xs-1 text-center"><a href="?order_by=strand">Strand</a></th>
+    <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+        <tr>
+            <th class="col-xs-1 text-center"><a href="?order_by=summary_id">Summary Id</a></th>
+            <th class="col-xs-3 text-center"><a href="?order_by=v_match">V-match</a></th>
+            <th class="col-xs-3 text-center"><a href="?order_by=d_match">D-match</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=j_match">J-match</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=chain_type">Chain Type</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=stop_codon">Stop Codon</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=vj_frame">V-J Frame</a></th>
+            <th class="col-xs-2 text-center"><a href="?order_by=productive">Productive</a></th>
+            <th class="col-xs-1 text-center"><a href="?order_by=strand">Strand</a></th>
         </tr>
         </thead>
         <tbody>
@@ -179,7 +70,7 @@
             {% endfor %}
         </tbody>
     </table>
-        <div class="pagination">
+    <div class="pagination">
     <span class="step-links">
         {% if summaries.has_previous %}
             <a href="?page={{ sums.previous_page_number }}">previous</a>
@@ -193,12 +84,12 @@
             <a href="?page={{ summaries.next_page_number }}">next</a>
         {% endif %}
     </span>
-        </div>
+    </div>
 
-        {#    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>#}
-        {#    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>#}
-        {#    <script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>#}
-        {#    <script src="src/jquery.filterable.js"></script>#}
+    {#    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>#}
+    {#    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>#}
+    {#    <script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>#}
+    {#    <script src="src/jquery.filterable.js"></script>#}
 
 
 {% endblock %}

@@ -11,7 +11,6 @@ def url_append_parameter(url, attr, val):
 
 
 def build_orderby_urls(url, attributes):
-    print url
     urls = {}
     for attr in attributes:
         urls[attr] = url_append_parameter(url, "order_by", attr)

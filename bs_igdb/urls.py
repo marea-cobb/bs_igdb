@@ -9,26 +9,26 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     # Sends requests to filter functions
-    url(r'^bs_igdb/search/result', 'bs_igdbview.views.result_filter'),
-    url(r'^bs_igdb/search/junction', 'bs_igdbview.views.junction_filter'),
-    url(r'^bs_igdb/searh/summary', 'bs_igdbview.views.summary_filter'),
-    url(r'^bs_igdb/search/sequence', 'bs_igdbview.views.sequence_filter'),
-    url(r'^bs_igdb/search/alignment2', 'bs_igdbview.views.alignment_filter2'),
-    url(r'^bs_igdb/full_search/results', 'bs_igdbview.views.full_search_filter'),
+    url(r'^search/result', 'bs_igdbview.views.result_filter'),
+    url(r'^search/junction', 'bs_igdbview.views.junction_filter'),
+    url(r'^search/summary', 'bs_igdbview.views.summary_filter'),
+    url(r'^search/sequence', 'bs_igdbview.views.sequence_filter'),
+    url(r'^search/alignment2', 'bs_igdbview.views.alignment_filter2'),
+    url(r'^full_search/results', 'bs_igdbview.views.full_search_filter'),
 
 
     # Basic Table Views:
-    url(r'^bs_igdb/result', 'bs_igdbview.views.result'),
-    url(r'^bs_igdb/junction', 'bs_igdbview.views.junction'),
-    url(r'^bs_igdb/summary', 'bs_igdbview.views.summary'),
-    url(r'^bs_igdb/sequence', 'bs_igdbview.views.sequence'),
-    url(r'^bs_igdb/alignment', 'bs_igdbview.views.alignment'),
-    url(r'^bs_igdb/full_search', 'bs_igdbview.views.full_search'),
+    url(r'^result', 'bs_igdbview.views.result'),
+    url(r'^junction', 'bs_igdbview.views.junction'),
+    url(r'^summary', 'bs_igdbview.views.summary'),
+    url(r'^sequence', 'bs_igdbview.views.sequence'),
+    url(r'^alignment', 'bs_igdbview.views.alignment'),
+    url(r'^full_search', 'bs_igdbview.views.full_search'),
 
 
 
     #Home page urls
-    url(r'^bs_igdb/', bs_igdbview.views.dashboard),
+    url(r'^$', bs_igdbview.views.dashboard),
     # url(r'^$', bs_igdbview.views.dashboard),
 
     # Admin view and admin documentation

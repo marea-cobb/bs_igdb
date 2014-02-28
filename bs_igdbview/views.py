@@ -123,9 +123,11 @@ def result_filter(request):
         result_list = IgBlastResult.objects.all().filter(alignment_summary_id=filter_on)
     elif selection == 'Sequence+ID':
         result_list = IgBlastResult.objects.all().filter(sequence_id=filter_on)
+    else:
+        result_list = IgBlastResult.objects.all()
 
-    order_by = request.GET.get('order_by', 'defaultOrderField')
-    result_list = result_list.objects.all().order_by(order_by)
+    order_by = request.GET.get('order_by', 'result_id')
+    result_list = result_list.order_by(order_by)
     paginator = Paginator(result_list, 25)
     page = request.GET.get('page')
     filter_urls = build_orderby_urls(request.get_full_path(), ["db_queried", "query", "length",
@@ -143,24 +145,27 @@ def result_filter(request):
 def summary_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
-    if selection == 'V+Match':
+    if selection == 'V Match':
         summary_list = IgBlastSummary.objects.all().filter(v_match=filter_on)
-    elif selection == 'D+Match':
+    elif selection == 'D Match':
         summary_list = IgBlastSummary.objects.all().filter(d_match=filter_on)
-    elif selection == 'J+Match':
+    elif selection == 'J Match':
         summary_list = IgBlastSummary.objects.all().filter(j_match=filter_on)
-    elif selection == 'Chain+Type':
+    elif selection == 'Chain Type':
         summary_list = IgBlastSummary.objects.all().filter(chain_type=filter_on)
-    elif selection == 'Stop+Codon':
+    elif selection == 'Stop Codon':
         summary_list = IgBlastSummary.objects.all().filter(stop_codon=filter_on)
-    elif selection == 'V-J+Frame':
+    elif selection == 'V-J Frame':
         summary_list = IgBlastSummary.objects.all().filter(vj_frame=filter_on)
     elif selection == 'Productive':
         summary_list = IgBlastSummary.objects.all().filter(productive=filter_on)
     elif selection == 'Strand':
         summary_list = IgBlastSummary.objects.all().filter(strand=filter_on)
-    order_by = request.GET.get('order_by', 'defaultOrderField')
-    summary_list = summary_list.objects.all().order_by(order_by)
+    else:
+        summary_list = IgBlastSummary.objects.all()
+
+    order_by = request.GET.get('order_by', 'summary_id')
+    summary_list = summary_list.order_by(order_by)
     filter_urls = build_orderby_urls(request.get_full_path(), ["v_match", "d_match", "j_match", "chain_type",
                                                                "stop_codon", "vj_frame", "productive", "strand"])
     paginator = Paginator(summary_list, 25)
@@ -178,75 +183,68 @@ def summary_filter(request):
 def junction_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
-    if selection == 'V+Match':
-        summary_list = IgBlastSummary.objects.all().filter(v_match=filter_on)
-    elif selection == 'D+Match':
-        summary_list = IgBlastSummary.objects.all().filter(d_match=filter_on)
-    elif selection == 'J+Match':
-        summary_list = IgBlastSummary.objects.all().filter(j_match=filter_on)
-    elif selection == 'Chain+Type':
-        summary_list = IgBlastSummary.objects.all().filter(chain_type=filter_on)
-    elif selection == 'Stop+Codon':
-        summary_list = IgBlastSummary.objects.all().filter(stop_codon=filter_on)
-    elif selection == 'V-J+Frame':
-        summary_list = IgBlastSummary.objects.all().filter(vj_frame=filter_on)
-    elif selection == 'Productive':
-        summary_list = IgBlastSummary.objects.all().filter(productive=filter_on)
-    elif selection == 'Strand':
-        summary_list = IgBlastSummary.objects.all().filter(strand=filter_on)
-    order_by = request.GET.get('order_by', 'defaultOrderField')
-    summary_list = summary_list.objects.all().order_by(order_by)
-    filter_urls = build_orderby_urls(request.get_full_path(), ["v_match", "d_match", "j_match", "chain_type",
-                                                               "stop_codon", "vj_frame", "productive", "strand"])
-    paginator = Paginator(summary_list, 25)
+    if selection == 'V End':
+        junction_list = JunctionSummary.objects.all().filter(v_end=filter_on)
+    elif selection == 'VD Region':
+        junction_list = JunctionSummary.objects.all().filter(vd_junction=filter_on)
+    elif selection == 'D Region':
+        junction_list = JunctionSummary.objects.all().filter(d_region=filter_on)
+    elif selection == 'DJ Junction':
+        junction_list = JunctionSummary.objects.all().filter(dj_junction=filter_on)
+    elif selection == 'J Start':
+        junction_list = JunctionSummary.objects.all().filter(j_start=filter_on)
+    else:
+        junction_list = JunctionSummary.objects.all()
+
+    order_by = request.GET.get('order_by', 'junction_id')
+    junction_list = junction_list.order_by(order_by)
+    filter_urls = build_orderby_urls(request.get_full_path(), ["v_end", "vd_junction", "d_region", "dj_junction",
+                                                               "j_start"])
+    paginator = Paginator(junction_list, 25)
     page = request.GET.get('page')
 
     try:
-        summaries = paginator.page(page)
+        junctions = paginator.page(page)
     except PageNotAnInteger:
-        summaries = paginator.page(1)
+        junctions = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries, "filter_urls": filter_urls})
+    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions, "filter_urls": filter_urls})
 
 
-# def alignment_filter(request):
-#     selection = request.GET.get('att')
-#     filter_on = request.GET.get('s')
-#     if selection == 'V Gene':
-#         alignment_list = AlignmentSummary.objects.all().filter(v_gene=filter_on)
-#     elif selection == 'Start Position':
-#         alignment_list = AlignmentSummary.objects.all().filter(start_position=filter_on)
-#     elif selection == 'Stop Position':
-#         alignment_list = AlignmentSummary.objects.all().filter(stop_position=filter_on)
-#     elif selection == 'Length':
-#         alignment_list = AlignmentSummary.objects.all().filter(length=filter_on)
-#     elif selection == 'Matches':
-#         alignment_list = AlignmentSummary.objects.all().filter(matches=filter_on)
-#     elif selection == 'Mismatches':
-#         alignment_list = AlignmentSummary.objects.all().filter(mismatches=filter_on)
-#     elif selection == 'Gaps':
-#         alignment_list = AlignmentSummary.objects.all().filter(gaps=filter_on)
-#     elif selection == 'Percent Identity':
-#         alignment_list = AlignmentSummary.objects.all().filter(percent_identity=filter_on)
-#     elif selection == 'Translation Query':
-#         alignment_list = AlignmentSummary.objects.all().filter(translation_query=filter_on)
-#
-#     paginator = Paginator(alignment_list, 25)
-#     page = request.GET.get('page')
-#     order_by = request.GET.get('order_by', 'defaultOrderField')
-#     IgBlastSummary.objects.all().order_by(order_by)
-#     try:
-#         alignments = paginator.page(page)
-#     except PageNotAnInteger:
-#         alignments = paginator.page(1)
-#     except EmptyPage:
-#         contacts = paginator.page(paginator.num_pages)
-#     return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments})
+def sequence_filter(request):
+    selection = request.GET.get('att')
+    filter_on = request.GET.get('s')
+    if selection == 'Sequence Id':
+        sequence_list = Sequence.objects.all().filter(sequence_id=filter_on)
+    elif selection == 'Sequence Name':
+        sequence_list = Sequence.objects.all().filter(sequence_name=filter_on)
+    elif selection == 'Sequence':
+        sequence_list = Sequence.objects.all().filter(sequence=filter_on)
+    elif selection == 'Sequence Type':
+        sequence_list = Sequence.objects.all().filter(sequence_type=filter_on)
+    elif selection == 'Size':
+        sequence_list = Sequence.objects.all().filter(size=filter_on)
+    else:
+        sequence_list = Sequence.objects.all()
+
+    filter_urls = build_orderby_urls(request.get_full_path(), ["sequence_id", "sequence_name", "sequence", "sequence_type",
+                                                               "size"])
+    order_by = request.GET.get('order_by', 'sequence_id')
+    sequence_list = sequence_list.order_by(order_by)
+    paginator = Paginator(sequence_list, 25)
+    page = request.GET.get('page')
+
+    try:
+        sequences = paginator.page(page)
+    except PageNotAnInteger:
+        sequences = paginator.page(1)
+    except EmptyPage:
+        contacts = paginator.page(paginator.num_pages)
+    return render_to_response('bs_igdb/sequence_list.html', {"sequences": sequences, "filter_urls": filter_urls})
 
 
 def alignment_filter2(request):
-    alignment_list = AlignmentSummary.objects.all()
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
     if selection == 'V Gene':
@@ -267,10 +265,11 @@ def alignment_filter2(request):
         alignment_list = AlignmentSummary.objects.all().filter(percent_identity=filter_on)
     elif selection == 'Translation Query':
         alignment_list = AlignmentSummary.objects.all().filter(translation_query__icontains=filter_on)
+    else:
+        alignment_list = AlignmentSummary.objects.all()
 
     order_by = request.GET.get('order_by', 'defaultOrderField')
     alignment_list = alignment_list.order_by(order_by)
-
     filter_urls = build_orderby_urls(request.get_full_path(), ["alignment_id", "v_gene", "start_position",
                                                                "stop_position", "length", "matches", "mismatches",
                                                                "gaps", "percent_identity", "translation_query"])
@@ -288,19 +287,19 @@ def alignment_filter2(request):
 
 #-----------------------------------------------------------------------------------------------------
 
-def full_search(request):
-    search_list = AlignmentSummary.objects.all()
-    paginator = Paginator(search_list, 25)
-    page = request.GET.get('page')
-    order_by = request.GET.get('order_by', 'defaultOrderField')
-    IgBlastSummary.objects.all().order_by(order_by)
-    try:
-        results = paginator.page(page)
-    except PageNotAnInteger:
-        results = paginator.page(1)
-    except EmptyPage:
-        contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/full_search.html', {"results": results})
+# def full_search(request):
+#     search_list = AlignmentSummary.objects.all()
+#     paginator = Paginator(search_list, 25)
+#     page = request.GET.get('page')
+#     order_by = request.GET.get('order_by', 'defaultOrderField')
+#     IgBlastSummary.objects.all().order_by(order_by)
+#     try:
+#         results = paginator.page(page)
+#     except PageNotAnInteger:
+#         results = paginator.page(1)
+#     except EmptyPage:
+#         contacts = paginator.page(paginator.num_pages)
+#     return render_to_response('bs_igdb/full_search.html', {"results": results})
 
 #
 # def full_search_filter(request):

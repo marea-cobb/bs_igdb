@@ -93,7 +93,7 @@ def alignment(request):
     alignment_list = AlignmentSummary.objects.all().order_by(order_by)
     paginator = Paginator(alignment_list, 25)
     page = request.GET.get('page')
-    order_by = request.GET.get('order_by', 'defaultOrderField')
+    order_by = request.GET.get('order_by', 'alignment_id')
     AlignmentSummary.objects.all().order_by(order_by)
     try:
         alignments = paginator.page(page)
@@ -268,7 +268,7 @@ def alignment_filter2(request):
     else:
         alignment_list = AlignmentSummary.objects.all()
 
-    order_by = request.GET.get('order_by', 'defaultOrderField')
+    order_by = request.GET.get('order_by', 'alignment_id')
     alignment_list = alignment_list.order_by(order_by)
     filter_urls = build_orderby_urls(request.get_full_path(), ["alignment_id", "v_gene", "start_position",
                                                                "stop_position", "length", "matches", "mismatches",

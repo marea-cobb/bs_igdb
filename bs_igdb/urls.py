@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^summary', 'bs_igdbview.views.summary'),
     url(r'^sequence', 'bs_igdbview.views.sequence'),
     url(r'^alignment', 'bs_igdbview.views.alignment'),
-    url(r'^full_search', 'bs_igdbview.views.full_search'),
+    # url(r'^full_search', 'bs_igdbview.views.full_search'),
 
 
 

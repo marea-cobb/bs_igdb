@@ -1,0 +1,10 @@
+Changes that still need to be implemented:
+
+- Adding new tables to models.py
+- Adding complex query
+    - search bar that includes textbox and dropdown menu for table, attribute, and "AND or OR" operators.
+- Front page visualization
+- Documentation!
+
+
+- Deployed onto Stamatatos-lx

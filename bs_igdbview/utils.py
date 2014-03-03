@@ -1,6 +1,7 @@
 from urlparse import urlparse, urlunparse
 from django.http import QueryDict
-
+import re
+from pprint import pprint
 
 def url_append_parameter(url, attr, val):
     (scheme, netloc, path, params, query, fragment) = urlparse(url)
@@ -15,3 +16,13 @@ def build_orderby_urls(url, attributes):
     for attr in attributes:
         urls[attr] = url_append_parameter(url, "order_by", attr)
     return urls
+
+
+def integer_filters(results_list, filter_by, selection):
+    return_list = []
+    for each in results_list:
+        field = each[0]
+        if bool(re.search(filter_by, str(field))):
+            return_list.append(field)
+    print return_list
+    return return_list

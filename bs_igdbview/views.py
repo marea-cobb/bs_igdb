@@ -7,7 +7,7 @@ from django.template import RequestContext, loader, Context
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
-from utils import build_orderby_urls
+from utils import build_orderby_urls, integer_filters
 import re
 
 
@@ -215,18 +215,37 @@ def junction_filter(request):
 def sequence_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
-    if selection == 'Sequence Id':
-        sequence_list = Sequence.objects.all().filter(sequence_id=filter_on)
-    elif selection == 'Sequence Name':
-        sequence_list = Sequence.objects.all().filter(sequence_name=filter_on)
-    elif selection == 'Sequence':
-        sequence_list = Sequence.objects.all().filter(sequence=filter_on)
-    elif selection == 'Sequence Type':
-        sequence_list = Sequence.objects.all().filter(sequence_type=filter_on)
-    elif selection == 'Size':
-        sequence_list = Sequence.objects.all().filter(size=filter_on)
+    print filter_on
+    check = request.GET.get('check')
+    if check == "on":
+        if selection == 'Sequence Id':
+            sequence_list = Sequence.objects.all().filter(sequence_id__regex=filter_on)
+        elif selection == 'Sequence Name':
+            sequence_list = Sequence.objects.all().filter(sequence_name__regex=filter_on)
+        elif selection == 'Sequence':
+            sequence_list = Sequence.objects.all().filter(fasta_sequence__regex=filter_on)
+        elif selection == 'Sequence Type':
+            sequence_list = Sequence.objects.all().filter(sequence_type__regex=filter_on)
+        elif selection == 'Size':
+            # queryset = Sequence.objects.all()
+            print type(Sequence.objects.all())
+            sizes = integer_filters(Sequence.objects.values_list('size'), filter_on, selection)
+            sequence_list = Sequence.objects.filter(size__in=sizes)
+        else:
+            sequence_list = Sequence.objects.all()
     else:
-        sequence_list = Sequence.objects.all()
+        if selection == 'Sequence Id':
+            sequence_list = Sequence.objects.all().filter(sequence_id=filter_on)
+        elif selection == 'Sequence Name':
+            sequence_list = Sequence.objects.all().filter(sequence_name=filter_on)
+        elif selection == 'Sequence':
+            sequence_list = Sequence.objects.all().filter(fasta_sequence=filter_on)
+        elif selection == 'Sequence Type':
+            sequence_list = Sequence.objects.all().filter(sequence_type=filter_on)
+        elif selection == 'Size':
+            sequence_list = Sequence.objects.all().filter(size=filter_on)
+        else:
+            sequence_list = Sequence.objects.all()
 
     filter_urls = build_orderby_urls(request.get_full_path(), ["sequence_id", "sequence_name", "sequence", "sequence_type",
                                                                "size"])
@@ -247,6 +266,7 @@ def sequence_filter(request):
 def alignment_filter2(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
+
     if selection == 'V Gene':
         alignment_list = AlignmentSummary.objects.all().filter(v_gene=filter_on)
     elif selection == 'Start Position':

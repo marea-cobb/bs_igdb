@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^search/sequence', 'bs_igdbview.views.sequence_filter'),
     url(r'^search/alignment', 'bs_igdbview.views.alignment_filter'),
     url(r'^full_search/results', 'bs_igdbview.views.full_search_filter'),
+    url(r'^search', 'bs_igdbview.views.search'),
 
 
     # Basic Table Views:

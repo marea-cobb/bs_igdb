@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{%  extends "bs_igdb/dashboard.html" %}
+
+{% block content%}
+
+    <head>
+        <h1>Search</h1>
+
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+
+    </head>
+
+
+    <body>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <form id='search' action='/search/result' method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" name="s">
+                    </div>
+                    <div class="col-md-3">
+                        <select id="table" class="selectpicker" name="table" title="Select One">
+                            <option id="result">Result</option>
+                            <option id="summary">Summary</option>
+                            <option id="junction">Junction</option>
+                            <option id="sequence">Sequence</option>
+                            <option id="alignment">Alignment</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox-inline">
+                            <input type="checkbox" name="check">Regex
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="submit" class="btn btn-default  btn-xs" type="submit">Search</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </ul>
+    </div>
+
+
+
+
+
+
+    </body>
+{% endblock %}

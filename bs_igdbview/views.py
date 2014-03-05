@@ -31,19 +31,26 @@ def dashboard(request):
     return HttpResponse(template.render(c))
 
 
+# Basic table views
+#----------------------------------------------------------------------------------------------------
 def result(request):
     order_by = request.GET.get('order_by', 'result_id')
     result_list = IgBlastResult.objects.all().order_by(order_by)
     paginator = Paginator(result_list, 25)
 
     page = request.GET.get('page')
+
+    # Calls utils method to append new filters or order_by to the current url
+    filter_urls = build_orderby_urls(request.get_full_path(), ["db_queried", "query", "length",
+                                                               "igblast_summary_id", "junction_summary_id",
+                                                               "alignment_summary_id", "sequence_id"])
     try:
         results = paginator.page(page)
     except PageNotAnInteger:
         results = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/result_list.html', {"results": results})
+    return render_to_response('bs_igdb/result_list.html', {"results": results, "filter_urls": filter_urls})
 
 
 def junction(request):
@@ -51,13 +58,17 @@ def junction(request):
     junction_list = JunctionSummary.objects.all().order_by(order_by)
     paginator = Paginator(junction_list, 25)
     page = request.GET.get('page')
+
+    # Calls utils method to append new filters or order_by to the current url
+    filter_urls = build_orderby_urls(request.get_full_path(), ["v_end", "vd_junction", "d_region", "dj_junction",
+                                                               "j_start"])
     try:
         junctions = paginator.page(page)
     except PageNotAnInteger:
         junctions = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions})
+    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions, "filter_urls": filter_urls})
 
 
 def summary(request):
@@ -65,13 +76,17 @@ def summary(request):
     summary_list = IgBlastSummary.objects.all().order_by(order_by)
     paginator = Paginator(summary_list, 25)
     page = request.GET.get('page')
+
+    # Calls utils method to append new filters or order_by to the current url
+    filter_urls = build_orderby_urls(request.get_full_path(), ["v_match", "d_match", "j_match", "chain_type",
+                                                               "stop_codon", "vj_frame", "productive", "strand"])
     try:
         summaries = paginator.page(page)
     except PageNotAnInteger:
         summaries = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries})
+    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries, "filter_urls": filter_urls})
 
 
 def sequence(request):
@@ -79,13 +94,17 @@ def sequence(request):
     sequence_list = Sequence.objects.all().order_by(order_by)
     paginator = Paginator(sequence_list, 25)
     page = request.GET.get('page')
+
+    # Calls utils method to append new filters or order_by to the current url
+    filter_urls = build_orderby_urls(request.get_full_path(), ["sequence_id", "sequence_name", "sequence", "sequence_type",
+                                                               "size"])
     try:
         sequences = paginator.page(page)
     except PageNotAnInteger:
         sequences = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/sequence_list.html', {"sequences": sequences})
+    return render_to_response('bs_igdb/sequence_list.html', {"sequences": sequences, "filter_urls": filter_urls})
 
 
 def alignment(request):
@@ -93,15 +112,18 @@ def alignment(request):
     alignment_list = AlignmentSummary.objects.all().order_by(order_by)
     paginator = Paginator(alignment_list, 25)
     page = request.GET.get('page')
-    order_by = request.GET.get('order_by', 'alignment_id')
-    AlignmentSummary.objects.all().order_by(order_by)
+
+    # Calls utils method to append new filters or order_by to the current url
+    filter_urls = build_orderby_urls(request.get_full_path(), ["alignment_id", "v_gene", "start_position",
+                                                               "stop_position", "length", "matches", "mismatches",
+                                                               "gaps", "percent_identity", "translation_query"])
     try:
         alignments = paginator.page(page)
     except PageNotAnInteger:
         alignments = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments})
+    return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments, "filter_urls": filter_urls})
 
 
 # Filter functions
@@ -386,7 +408,12 @@ def alignment_filter(request):
     return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments, "filter_urls": filter_urls})
 
 
-    #-----------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------
+
+def search(request):
+    return render_to_response('bs_igdb/search.html')
+
+
 
     # def full_search(request):
     #     search_list = AlignmentSummary.objects.all()

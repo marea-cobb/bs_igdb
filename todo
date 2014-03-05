@@ -7,8 +7,7 @@ Changes that still need to be implemented:
     - search bar that includes textbox, dropdown menus to choose table, attribute, "AND or OR" operators, and a checkbox for regex expressions.
 - Front page visualization
 - Documentation!
-- Checkbox for regex searches
-    - Finish adding to html files
+- Troubleshoot regex capability
 - Fix url links for filtering first then adding order by
     - Test alignment_list.html --> has right idea but needs help on initial order
 

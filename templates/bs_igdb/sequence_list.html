@@ -45,11 +45,11 @@
     <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
         <thead>
         <tr>
-            <th class="col-xs-2 text-center"><a href="/search/sequence/?order_by=sequence_id">Sequence Id</a></th>
-            <th class="col-xs-3 text-center"><a href="/search/sequence/?order_by=sequence_name">Sequence Name</a></th>
-            <th class="col-xs-10 text-center"><a href="/search/sequence/?order_by=fasta_sequence">Sequence</a></th>
-            <th class="col-xs-3 text-center"><a href="/search/sequence/?order_by=fasta_type">Sequence Type</a></th>
-            <th class="col-xs-2 text-center"><a href="/search/sequence/?order_by=size">Size</a></th>
+            <th class="col-xs-2 text-center"><a href={{ filter_urls.sequence_id }}>Sequence Id</a></th>
+            <th class="col-xs-3 text-center"><a href={{ filter_urls.sequence_name }}>Sequence Name</a></th>
+            <th class="col-xs-10 text-center"><a href={{ filter_urls.fasta_sequence }}>Sequence</a></th>
+            <th class="col-xs-3 text-center"><a href={{ filter_urls.fasta_type }}>Sequence Type</a></th>
+            <th class="col-xs-2 text-center"><a href={{ filter_urls.size}}>Size</a></th>
         </tr>
         </thead>
         <tbody>

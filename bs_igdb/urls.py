@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^search/junction', 'bs_igdbview.views.junction_filter'),
     url(r'^search/summary', 'bs_igdbview.views.summary_filter'),
     url(r'^search/sequence', 'bs_igdbview.views.sequence_filter'),
-    url(r'^search/alignment2', 'bs_igdbview.views.alignment_filter2'),
+    url(r'^search/alignment', 'bs_igdbview.views.alignment_filter'),
     url(r'^full_search/results', 'bs_igdbview.views.full_search_filter'),
 
 

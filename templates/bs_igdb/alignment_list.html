@@ -13,25 +13,32 @@
     <body>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
-            <form id='search' action='/search/alignment2' method="get">
-                <div class="input-group">
-                    <select id="att" class="selectpicker" name="att" title="Select One">
-                        <option id="v_gene">V Gene</option>
-                        <option id="start_position">Start Position</option>
-                        <option id="stop_position">Stop Position</option>
-                        <option id="length">Length</option>
-                        <option id="matches">Matches</option>
-                        <option id="mismatches">Mismatches</option>
-                        <option id="gaps">Gaps</option>
-                        <option id="percent_identity">Percent Identity</option>
-                        <option id="translation_query">Translation Query</option>
-                    </select>
-                    <div class="col-lg-6">
-                        <input type="text" name="s" class="form-control">
-                    </div><!-- /.col-lg-6 -->
-                    <span class="input-group-btn">
-                    <button id="submit" class="btn btn-default" type="submit">Search</button>
-                    </span>
+            <form id='search' action='/search/alignment' method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" name="s">
+                    </div>
+                    <div class="col-md-4">
+                        <select id="att" class="selectpicker" name="att" title="Select One">
+                            <option id="v_gene">V Gene</option>
+                            <option id="start_position">Start Position</option>
+                            <option id="stop_position">Stop Position</option>
+                            <option id="length">Length</option>
+                            <option id="matches">Matches</option>
+                            <option id="mismatches">Mismatches</option>
+                            <option id="gaps">Gaps</option>
+                            <option id="percent_identity">Percent Identity</option>
+                            <option id="translation_query">Translation Query</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox-inline">
+                            <input type="checkbox" name="check">Regex
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="submit" class="btn btn-default" type="submit">Search</button>
+                    </div>
                 </div>
             </form>
         </ul>
@@ -39,7 +46,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     </body>
-        <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+    <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
         <thead>
         <tr>
             <th class="col-xs-2 text-center"><a href={{ filter_urls.alignment_id }}>Alignment Id</a></th>

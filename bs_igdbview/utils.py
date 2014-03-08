@@ -26,3 +26,4 @@ def integer_filters(results_list, filter_by, selection):
             return_list.append(field)
     print return_list
     return return_list
+

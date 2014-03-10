@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 {%  extends "bs_igdb/dashboard.html" %}
 
+=======
+{%  extends "bs_igdb/dashboard.html" %}
+>>>>>>> 8b59a508e1a4396c617c1d485cc2619eb3dda854
 {% block content%}
 
     <script>
@@ -10,13 +14,24 @@
                 $(this).parents().parents().children("#search").last().clone().appendTo("#navbar");
             });
         });
-    </script>
+    </script type="text/javascript">
+
+    {#    <script>#}
+    {#        $(document).ready(function() {#}
+    {#            $('#tables').click(function() {#}
+    {#                var tableVal = $('.selectpicker option:selected').text();#}
+    {#                $(tableVal).append();#}
+    {#                var statement = "Tables clicked.";#}
+    {#                $(statement).append();#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
 
     <head>
         <h1>Search</h1>
         <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">
+{#        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">#}
     </head>
 
 
@@ -52,7 +67,7 @@
                         <input type="text" name="s">
                     </div>
                     <div class="col-md-3">
-                        <select id="table" class="selectpicker" name="table" title="Select One">
+                        <select id="table" class="selectpicker tables">
                             <option id="result">Result</option>
                             <option id="summary">Summary</option>
                             <option id="junction">Junction</option>
@@ -65,22 +80,25 @@
                             <input type="checkbox" name="check">Regex
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <button id="submit" class="btn btn-default  btn-xs" type="submit">Search</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button id="add_row" type="button" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </div>
                 </div>
             </form>
         </ul>
     </div>
 
-
-
-
+    {#    <script src="http://silviomoreto.github.io/bootstrap-select/javascripts/bootstrap-select.js"></script>#}
+    {#    <script>#}
+    {#        $(document).ready(function(e) {#}
+    {#            $('.selectpicker').selectpicker();#}
+    {#        });#}
+    {#    </script>#}
+    {#                    <div class="col-md-2">#}
+    {#                        <button id="submit" class="btn btn-default  btn-xs" type="submit">Search</button>#}
+    {#                    </div>#}
+    {#                    <div class="col-md-1">#}
+    {#                        <button id="add_row" type="button" class="btn btn-default btn-xs">#}
+    {#                            <span class="glyphicon glyphicon-plus"></span>#}
+    {#                    </button>#}
+    {#                    </div>#}
 
 
     </body>

@@ -42,7 +42,7 @@ def result(request):
 
     # Calls utils method to append new filters or order_by to the current url
     filter_urls = build_orderby_urls(request.get_full_path(), ["db_queried", "query", "length",
-                                                               "igblast_summary_id", "junction_summary_id",
+                                                               # "igblast_summary_id", "junction_summary_id",
                                                                "alignment_summary_id", "sequence_id"])
     try:
         results = paginator.page(page)

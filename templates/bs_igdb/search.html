@@ -1,13 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
 {%  extends "bs_igdb/dashboard.html" %}
 {% block content%}
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $("#add_table").click(function() {
                 $(this).parents().parents().children("#search").last().clone().appendTo("#navbar");
             });
         });
-    </script type="text/javascript">
+    </script>
 
     {#    <script>#}
     {#        $(document).ready(function() {#}
@@ -24,7 +27,7 @@
         <h1>Search</h1>
         <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-{#        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">#}
+        {#        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">#}
     </head>
 
 
@@ -96,3 +99,4 @@
 
     </body>
 {% endblock %}
+</html>

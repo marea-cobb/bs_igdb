@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 from utils import build_orderby_urls, integer_filters
 import re
+from django.db.models import get_model
 
 
 def index(request):
@@ -230,14 +231,14 @@ def summary_filter(request):
             summary_list = IgBlastSummary.objects.all().filter(strand=filter_on)
         else:
             summary_list = IgBlastSummary.objects.all()
-    
+
     order_by = request.GET.get('order_by', 'summary_id')
     summary_list = summary_list.order_by(order_by)
     filter_urls = build_orderby_urls(request.get_full_path(), ["v_match", "d_match", "j_match", "chain_type",
                                                                "stop_codon", "vj_frame", "productive", "strand"])
     paginator = Paginator(summary_list, 25)
     page = request.GET.get('page')
-    
+
     try:
         summaries = paginator.page(page)
     except PageNotAnInteger:
@@ -245,7 +246,7 @@ def summary_filter(request):
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
     return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries, "filter_urls": filter_urls})
-    
+
 
 def junction_filter(request):
     selection = request.GET.get('att')
@@ -414,6 +415,66 @@ def search(request):
     return render_to_response('bs_igdb/search.html')
 
 
+def search_result(request):
+    tables = request.GET.getlist('table_opts')
+    selection = request.GET.getlist('options')
+    print selection
+    filter_on = request.GET.getlist('s')
+    # check = request.GET.getParameter('check')
+    # checks = request.GET.getlist('checked')
+    position = 0
+    my_params = {}
+    for each in selection:
+        my_params[each.encode('ascii', 'ignore').lower()] = filter_on[position].encode('ascii', 'ignore')
+        position += 1
+    # for each in tables:
+    #     query.append((each.encode('ascii', 'ignore'), selection[num_conditions].encode('ascii', 'ignore'), filter_on[num_conditions].encode('ascii', 'ignore')))
+    #     num_conditions += 1
+    iterator = 0
+    num_tables = len(tables)
+    print num_tables
+    while iterator < num_tables:
+        if iterator == 0:
+            name = get_full_model_name(tables[0])
+            model = get_model('bs_igdbview', name)
+            # base = model.objects.all()
+            # result = get_model('bs_igdbview', get_full_model_name(tables[1]))
+            base = model.objects.select_related().get(my_params)
+            print base
+            iterator += 1
+        else:
+            name = get_full_model_name(tables[iterator])
+            model = get_model('bs_igdbview', name)
+            for keys, values in my_params.items():
+                print(keys)
+                print(values)
+            iterator += 1
+        # each.objects.all().filter["%s = %s"], params=[selection[position], filter_on[position]])
+    # SQL_statement = "SELECT * FROM %s WHERE %s = %s", (each, selection[position], filter_on[position])
+
+
+    # if request.GET.get('check', False):
+    #     check = check.append(False)
+    # else:
+    #     check = check.append(True)
+    # for each in selection:
+    return render_to_response('bs_igdb/search_result.html')
+
+
+def get_full_model_name(model):
+    if model == "Result":
+        full_name = "IgBlastResult"
+    elif model == "Summary":
+        full_name = "IgBlastSummary"
+    elif model == "Junction":
+        full_name = "JunctionSummary"
+    elif model == "Sequence":
+        full_name = "Sequence"
+    elif model == "Alignment":
+        full_name = "AlignmentSummary"
+    else:
+        full_name = model
+    return full_name
 
     # def full_search(request):
     #     search_list = AlignmentSummary.objects.all()

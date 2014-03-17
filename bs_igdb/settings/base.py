@@ -149,7 +149,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # 'django_tables2',
     # 'grappelli',
-    'django_admin_bootstrapped',
+    # 'django_admin_bootstrapped',
+    # 'django_admin_bootstrapped.bootstrap3',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

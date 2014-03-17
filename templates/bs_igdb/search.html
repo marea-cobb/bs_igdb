@@ -1,71 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 {% extends "bs_igdb/dashboard.html" %}
 
 {% block content%}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#add_table").click(function() {
-                $(this).parents().parents().children("#search").last().clone().appendTo("#navbar");
-            });
-        });
-    </script>
-
-    {#    <script>#}
-    {#        $(document).ready(function() {#}
-    {#            $('#tables').click(function() {#}
-    {#                var tableVal = $('.selectpicker option:selected').text();#}
-    {#                $(tableVal).append();#}
-    {#                var statement = "Tables clicked.";#}
-    {#                $(statement).append();#}
-    {#            });#}
-    {#        });#}
-    {#    </script>#}
 
     <head>
         <h1>Search</h1>
         <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-        {#        <link href="lib/bootstrap-filterable.css" rel="stylesheet" type="text/css">#}
+
+        <script>
+            $(document).ready(function() {
+                $("#add_table").click(function() {
+                    var new_row = $(this).parents().parents("#search_row").last().clone(true);
+                    $(new_row.css({
+                        'padding-top':'10px'}).appendTo("#search_container"));
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $("#remove_table").click(function() {
+                    $(this).parents("#search_row").last().remove();
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $("#table_opts").change(function() {
+                    var tableVal = $('option:selected', this).text();
+                    var $options = $(this).parents().children().children("#options");
+                    if(tableVal == "Summary") {
+                        var newOptions = {"V Match":"v_match" , "D Match":"d_match", "J Match":"j_match",
+                            "Chain Type":"chain_type", "Stop Codon":"stop_codon", "V-J Frame":"vj_frame", "Productive":"productive",
+                            "Strand":"strand"};
+                    }
+                    else if(tableVal=="Junction") {
+                        var newOptions = {"V End":"v_end", "VD Junction":"vd_junction", "D Region":"d_region",
+                            "DJ Junction":"dj_junction", "J Start":"j_start"};
+                    }
+                    else if(tableVal=="Sequence"){
+                        var newOptions = {"Sequence Name":"sequence_name", "Sequence":"sequence", "Sequence Type":"sequence_type",
+                            "Size":"size"};
+                    }
+                    else if(tableVal=="Alignment"){
+                        var newOptions = {"V Gene":"v_gene", "Start Position":"start_position", "Stop Position":"stop_position",
+                            "Length":"length", "Matches":"matches", "Mismatches":"mismatches", "Gaps":"gaps",
+                            "Percent Identity":"percent_identity", "Translation Query":"translation_query"};
+                    }
+                    else {
+                        var newOptions = {"DB Queried":"db_queried", "Query":"query", "Length":"length", "Summary ID":"igblast_summary_id",
+                            "Junction ID":"junction_summary_id", "Alignment ID":"alignment_summary_id","Sequence ID":"sequence_id"};
+                    }
+                    $options.empty();
+                    $.each(newOptions, function(key, value) {
+                        $options.append($("<option></option>").attr("value", value).text(key));
+                    });
+                    {#                    alert("Handler for .change() called." + tableVal + "is now selected.");#}
+                });
+            });
+        </script>
+
+{#        <script>#}
+{#            $(document).ready(function() {#}
+{#                $("#check").click(function() {#}
+                    {#                  alert("checkbox clicked");#}
+{#                    var checked = $(this).is(':checked');#}
+{#                    var str = jQuery.param( checked );#}
+{#                    $( "#check_results" ).text( str );#}
+{#                    $('.datalink').attr('href', function() {#}
+{#                        return this.href + '&checked=' + checked;#}
+{#                });#}
+                {#                var check_param = false;#}
+                {#                if($("#check").click(function() {#}
+                {#                    alert("box has been checked.")#}
+                {#                    check_param = true;#}
+                {#                    var str = jQuery.param( check_param );#}
+                {#                });#}
+                {#                $( "#check_results" ).text( str );#}
+{#            });#}
+{#        </script>#}
+
     </head>
 
 
     <body>
-    <div id="search_bar" class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav" id="navbar">
-            <form id="search_parameters" action="/search/result" method="get">
-                <div class="row">
-                    <div class="col-md-2">
+    <form id="search_form" action='/search/results' method="get">
+        <div id="search_container" class="container-fluid">
+            <section>
+                <div class="row" id="search_row" name="search_row">
+                    <div class="col-md-1">
                         <select id="conditions" class="selectpicker" name="conditions" title="Select One">
                             <option id="and">AND</option>
                             <option id="or">OR</option>
                         </select>
                     </div>
-                    <div id="conditions" class="col-md-3" >
-                        <button id="condition" class="btn btn-default btn-xs" type="button">Add Condition</button>
-                    </div>
-                    <div id="add_table" class="col-md-2">
-                        <button id="add_table" class="btn btn-default btn-xs" type="button">Add Table</button>
-                    </div>
-                    <div class="col-md-3">
-                        <button id="remove_table" class="btn btn-default btn-xs" type="button">Remove Table</button>
-                    </div>
                     <div class="col-md-2">
-                        <button id="submit" class="btn btn-default btn-xs" type="submit">Search</button>
-                    </div>
-                </div>
-            </form>
-
-            <form id='search' action='/search/result' method="get">
-                <div class="row" id="search">
-                    <div class="col-md-4">
                         <input type="text" name="s">
                     </div>
-                    <div class="col-md-3">
-                        <select id="table" class="selectpicker tables">
+                    <div class="col-md-2">
+                        <select id="table_opts" name="table_opts" class="selectpicker">
                             <option id="result">Result</option>
                             <option id="summary">Summary</option>
                             <option id="junction">Junction</option>
@@ -73,31 +110,51 @@
                             <option id="alignment">Alignment</option>
                         </select>
                     </div>
+
                     <div class="col-md-2">
-                        <div class="checkbox-inline">
-                            <input type="checkbox" name="check">Regex
-                        </div>
+                        <select id="options" name="options" class="selectpicker">
+                            <option id="db_queried">DB Queried</option>
+                            <option id="query">Query</option>
+                            <option id="length">Length</option>
+                            <option id="igblast_summary_id">Summary ID</option>
+                            <option id="junction_summary_id">Junction ID</option>
+                            <option id="alignment_summary_id">Alignment ID</option>
+                            <option id="sequence_id">Sequence ID</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="checkbox-inline"><input type="checkbox" id="check" name="check">Regex</div>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="add_table" class="btn btn-default btn-xs" type="button">Add</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="remove_table" class="btn btn-default btn-xs" type="button">Remove</button>
                     </div>
                 </div>
-            </form>
-        </ul>
-    </div>
+            </section>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button id="submit" class="btn btn-default btn-xs" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
 
-    {#    <script src="http://silviomoreto.github.io/bootstrap-select/javascripts/bootstrap-select.js"></script>#}
-    {#    <script>#}
-    {#        $(document).ready(function(e) {#}
-    {#            $('.selectpicker').selectpicker();#}
-    {#        });#}
-    {#    </script>#}
-    {#                    <div class="col-md-2">#}
-    {#                        <button id="submit" class="btn btn-default  btn-xs" type="submit">Search</button>#}
+    {#    <div id="search_bar" class="collapse navbar-collapse navbar-ex1-collapse">#}
+    {#        <ul class="nav navbar-nav" id="navbar">#}
+    {#            <div class="container-fluid">#}
+    {#                <form id="search_parameters" action="/search/results" method="get">#}
+    {#                    <div class="row">#}
+    {#                        <div class="col-md-12">#}
+    {#                            <button id="submit" class="btn btn-default btn-xs" type="submit">Search</button>#}
+    {#                        </div>#}
     {#                    </div>#}
-    {#                    <div class="col-md-1">#}
-    {#                        <button id="add_row" type="button" class="btn btn-default btn-xs">#}
-    {#                            <span class="glyphicon glyphicon-plus"></span>#}
-    {#                    </button>#}
-    {#                    </div>#}
-
+    {#                </form>#}
+    {#            </div>#}
+    {#        </ul>#}
+    {#    </div>#}
 
     </body>
 {% endblock %}

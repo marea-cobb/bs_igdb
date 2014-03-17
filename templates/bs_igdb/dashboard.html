@@ -1,36 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">
-<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap/js/bootstrap.js">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="/tablesorter/css/theme.bootstrap.css">
-<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap-select/css/bootstrap-select.css">
-<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap-select/css/bootstrap-select.js">
-
-<script src="js/jquery.js" />
-<script src="js/bootstrap.min.js" />
-<script src="twitter-bootstrap-v2/docs/assets/js/bootstrap-dropdown.js" />
-
-{#<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap/css/bootstrap.css">#}
-{#<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap/js/bootstrap.min.js">#}
-{#<link rel="stylesheet" type="text/css" href="../../bs_igdbview/static/bootstrap/js/bootstrap.js">#}
-{#<link rel="stylesheet" href="css/bootstrap.min.css">#}
-{#<link rel="stylesheet" href="/tablesorter/css/theme.bootstrap.css">#}
-{#<script src="js/jquery.js"></script>#}
-{#<script src="js/bootstrap.min.js"></script>#}
-{#<script src="twitter-bootstrap-v2/docs/assets/js/bootstrap-dropdown.js"></script>#}
-
-
+{#<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">#}
+{#<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">#}
+{%  load staticfiles %}
+<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+{#<link href="{% static 'bootstrap/css/bootstrap.min.js' %}" rel="stylesheet" media="screen">#}
 
 {%  block navagation %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" />
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js /"></script>
+{#    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js /"></script>#}
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+{#    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>#}
+{#    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>#}
 
 
     <div class='navbar navbar-inverse navbar-default' role="navigation">
@@ -44,16 +27,6 @@
                     <li id="sequence"><a href="/sequence">Sequence</a></li>
                     <li id="alignment"><a href="/alignment">Alignment</a></li>
                     <li id="search"><a href="/search">Search</a></li>
-{#                    <li class="dropdown" >#}
-{#                        <a data-toggle="dropdown" href="search">Search<span class="caret"></span></a>#}
-                        {#                        <ul class="dropdown-toggle" data-toggle="dropdown">#}
-{#                        <ul class="dropdown-menu" data-toggle="dropdown">#}
-{#                            <li><a href="search">Sequence Queries</a></li>#}
-{#                            <li><a href="search">IgBlast Queries</a></li>#}
-{#                            <li><a href="search">Immunogen Queries</a></li>#}
-{#                        </ul>#}
-                        {#                        </ul>#}
-{#                    </li>#}
                 </ul>
             </div>
         </div>
@@ -62,7 +35,7 @@
 {%  endblock %}
 
 {%  block content %}
-        <h1><a>Immunogen Database</a></h1>
+    <h1><a>Immunogen Database</a></h1>
     <div id='content' class="row">
         <div class='container'>
             <h2>Main Content Section</h2>
@@ -76,11 +49,7 @@
 
 
 {#<script type="text/javascript" src="../../bs_igdbview/static/bootstrap/js/bootstrap.js"></script>#}
-{#<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>#}
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 {#<script src="media/js/bootstrap-dropdown.js" type="text/javascript"></script>#}
 
 </html>
-
-<script type="text/javascript" src="../../bs_igdbview/static/bootstrap/js/bootstrap.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script src="media/js/bootstrap-dropdown.js" type="text/javascript"></script>

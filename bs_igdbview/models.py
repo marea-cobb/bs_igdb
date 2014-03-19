@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-#testing testing 1 2 3...
-
-
 from django.db import models
 
 
@@ -146,6 +143,3 @@ class Library(models.Model):
     downloaddate = models.DateField()
     notes = models.CharField(max_length=400)
     fastqpath = models.CharField(max_length=1025)
-
-    # def __unicode__(self):
-    # return str(self.librarycode)

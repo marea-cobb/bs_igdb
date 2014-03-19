@@ -12,6 +12,21 @@
 
     </head>
 
+    <table class="table table-condensed table-hover" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+        {% for header in headers %}
+            <th class="col-xs-1 text-center">{{ header }}</th>
+        {% endfor %}
+        </thead>
+        <tbody>
+        {% for res in results %}
+            <tr>
+                {% for x in res %} <td class="text-center">{{ x }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 
 {% endblock %}

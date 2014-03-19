@@ -5,9 +5,11 @@ Changes that still need to be implemented:
     - Create new upload script for the new tables.
 - Adding complex query
     - functionality behind the search
+    - Must require IgBlastResult as all tables are linked through it.
 - Front page visualization
 - Documentation!
 - Add dynamic ordering (A-Z or Z-A)
+- Alter pageination to a cleaner look
 
 
 Testing Requirements:

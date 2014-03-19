@@ -2,6 +2,7 @@
 <html lang="en">
 {% extends "bs_igdb/dashboard.html" %}
 
+
 {% block content %}
     <head>
         <h1>IgBlast Alignment Summary</h1>
@@ -80,20 +81,24 @@
         </tbody>
     </table>
     <div class="pagination">
-    <span class="step-links">
-        {% if alignments.has_previous %}
-            <a href="?page={{ align.previous_page_number }}">previous</a>
-        {% endif %}
+        <span class="step-links">
+            {% if alignments.has_previous %}
+                <a href="?page={{ align.previous_page_number }}">previous</a>
+            {% endif %}
 
-        <span class="current">
-            Page {{ alignments.number }} of {{ alignments.paginator.num_pages }}.
+            <span class="current">
+                Page {{ alignments.number }} of {{ alignments.paginator.num_pages }}.
+            </span>
+
+            {% if alignments.has_next %}
+                <a href="?page={{ alignments.next_page_number }}">next</a>
+            {% endif %}
         </span>
-
-        {% if alignments.has_next %}
-            <a href="?page={{ alignments.next_page_number }}">next</a>
-        {% endif %}
-    </span>
     </div>
+
+
+
+
 
 {% endblock %}
 </html>

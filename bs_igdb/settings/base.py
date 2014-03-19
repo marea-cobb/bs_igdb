@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'south',
     'bs_igdbview',
     'django.contrib.humanize',
+    'django_tables2'
     # 'gunicorn',
 )
 

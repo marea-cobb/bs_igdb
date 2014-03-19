@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="checkbox-inline">
-                                <input type="checkbox" name="check">Regex
+                            <input type="checkbox" name="check">Regex
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -65,20 +65,27 @@
             {% endfor %}
         </tbody>
     </table>
+
     <div class="pagination">
-    <span class="step-links">
-        {% if sequences.has_previous %}
-            <a href="?page={{ seq.previous_page_number }}">previous</a>
-        {% endif %}
+        <span class="step-links">
+            {% if sequences.has_previous %}
+                <a href="?page={{  sequences.previous_page_number }}">&laquo;</a>
+            {%  endif %}
 
-        <span class="current">
-            Page {{ sequences.number }} of {{ sequences.paginator.num_pages }}.
+            {% for page in paginator.page_range %}
+                {% if page <= toolbar_max and page > toolbar_min and page != sequences.number %}
+                    <a href="?page={{  page  }}">{{ page }}</a>
+                {% elif page == sequences.number %}
+                    <span class="current">
+                        {{  sequences.number }}
+                    </span>
+                {% endif %}
+            {% endfor %}
+
+            {% if sequences.has_next %}
+                <a href="?page={{ sequences.next_page_number }}">&raquo;</a>
+            {% endif %}
         </span>
-
-        {% if sequences.has_next %}
-            <a href="?page={{ sequences.next_page_number }}">next</a>
-        {% endif %}
-    </span>
     </div>
 
 {% endblock %}

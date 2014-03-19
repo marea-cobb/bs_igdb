@@ -78,22 +78,43 @@
             {% endfor %}
         </tbody>
     </table>
+    {#    <div class="pagination">#}
+    {#    <span class="step-links">#}
+    {#        {% if summaries.has_previous %}#}
+    {#            <a href="?page={{ sums.previous_page_number }}">previous</a>#}
+    {#        {% endif %}#}
+    {##}
+    {#        <span class="current">#}
+    {#            Page {{ summaries.number }} of {{ summaries.paginator.num_pages }}.#}
+    {#        </span>#}
+    {##}
+    {#        {% if summaries.has_next %}#}
+    {#            <a href="?page={{ summaries.next_page_number }}">next</a>#}
+    {#        {% endif %}#}
+    {#    </span>#}
+    {#    </div>#}
+
     <div class="pagination">
-    <span class="step-links">
-        {% if summaries.has_previous %}
-            <a href="?page={{ sums.previous_page_number }}">previous</a>
-        {% endif %}
+        <span class="step-links">
+            {% if summaries.has_previous %}
+                <a href="?page={{  summaries.previous_page_number }}">&laquo;</a>
+            {%  endif %}
 
-        <span class="current">
-            Page {{ summaries.number }} of {{ summaries.paginator.num_pages }}.
+            {% for page in paginator.page_range %}
+                {% if page <= toolbar_max and page > toolbar_min and page != summaries.number %}
+                    <a href="?page={{  page  }}">{{ page }}</a>
+                {% elif page == summaries.number %}
+                    <span class="current">
+                        {{  summaries.number }}
+                    </span>
+                {% endif %}
+            {% endfor %}
+
+            {% if summaries.has_next %}
+                <a href="?page={{ summaries.next_page_number }}">&raquo;</a>
+            {% endif %}
         </span>
-
-        {% if summaries.has_next %}
-            <a href="?page={{ summaries.next_page_number }}">next</a>
-        {% endif %}
-    </span>
     </div>
-
 
 {% endblock %}
 

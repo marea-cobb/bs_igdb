@@ -7,14 +7,6 @@ from utils import build_orderby_urls, integer_filters
 from django.db import connection
 import psycopg2
 
-# from django.db.models import get_model
-# import re
-# from django.core.urlresolvers import reverse
-# from django.db.models.query import QuerySet
-# from django.views.generic import View, ListView, DetailView
-# from django.views.generic.list import ListView
-
-
 def index(request):
     result_list = IgBlastResult.objects.all()
     template_name = 'bs_igdb/index.html'
@@ -54,7 +46,15 @@ def result(request):
         results = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/result_list.html', {"results": results, "filter_urls": filter_urls})
+
+    toolbar_max = min(results.number + 4, paginator.num_pages)
+    toolbar_min = min(results.number - 4, 0)
+
+    return render_to_response('bs_igdb/result_list.html', {"results": results,
+                                                           "filter_urls": filter_urls,
+                                                           "paginator": paginator,
+                                                           "toolbar_max": toolbar_max,
+                                                           "toolbar_min": toolbar_min})
 
 
 def junction(request):
@@ -72,7 +72,15 @@ def junction(request):
         junctions = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions, "filter_urls": filter_urls})
+
+    toolbar_max = min(junctions.number + 4, paginator.num_pages)
+    toolbar_min = min(junctions.number - 4, 0)
+
+    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions,
+                                                             "filter_urls": filter_urls,
+                                                             "paginator": paginator,
+                                                             "toolbar_max": toolbar_max,
+                                                             "toolbar_min": toolbar_min})
 
 
 def summary(request):
@@ -90,7 +98,15 @@ def summary(request):
         summaries = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries, "filter_urls": filter_urls})
+
+    toolbar_max = min(summaries.number + 4, paginator.num_pages)
+    toolbar_min = min(summaries.number - 4, 0)
+
+    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries,
+                                                            "filter_urls": filter_urls,
+                                                            "paginator": paginator,
+                                                            "toolbar_max": toolbar_max,
+                                                            "toolbar_min": toolbar_min})
 
 
 def sequence(request):
@@ -103,7 +119,6 @@ def sequence(request):
     filter_urls = build_orderby_urls(request.get_full_path(), ["sequence_id", "sequence_name", "sequence", "sequence_type",
                                                                "size"])
 
-    print "Hi i'm in sequence()"
     try:
         sequences = paginator.page(page)
     except PageNotAnInteger:
@@ -113,10 +128,6 @@ def sequence(request):
 
     toolbar_max = min(sequences.number + 4, paginator.num_pages)
     toolbar_min = min(sequences.number - 4, 0)
-
-    print "Sequences number: " + str(sequences.number)
-    print "Toolbar Max: " + str(toolbar_max)
-    print "Toolbar Min: " + str(toolbar_min)
 
     return render_to_response('bs_igdb/sequence_list.html', {"sequences": sequences,
                                                              "filter_urls": filter_urls,
@@ -141,7 +152,15 @@ def alignment(request):
         alignments = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments, "filter_urls": filter_urls})
+
+    toolbar_max = min(alignments.number + 4, paginator.num_pages)
+    toolbar_min = min(alignments.number - 4, 0)
+
+    return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments,
+                                                              "filter_urls": filter_urls,
+                                                              "paginator": paginator,
+                                                              "toolbar_max": toolbar_max,
+                                                              "toolbar_min": toolbar_min})
 
 
 # Filter functions
@@ -203,7 +222,15 @@ def result_filter(request):
         results = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/result_list.html', {"results": results, "filter_urls": filter_urls})
+
+    toolbar_max = min(results.number + 4, paginator.num_pages)
+    toolbar_min = min(results.number - 4, 0)
+
+    return render_to_response('bs_igdb/result_list.html', {"results": results,
+                                                           "filter_urls": filter_urls,
+                                                           "paginator": paginator,
+                                                           "toolbar_max": toolbar_max,
+                                                           "toolbar_min": toolbar_min})
 
 
 def summary_filter(request):
@@ -262,7 +289,15 @@ def summary_filter(request):
         summaries = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries, "filter_urls": filter_urls})
+
+    toolbar_max = min(summaries.number + 4, paginator.num_pages)
+    toolbar_min = min(summaries.number - 4, 0)
+
+    return render_to_response('bs_igdb/summary_list.html', {"summaries": summaries,
+                                                            "filter_urls": filter_urls,
+                                                            "paginator": paginator,
+                                                            "toolbar_max": toolbar_max,
+                                                            "toolbar_min": toolbar_min})
 
 
 def junction_filter(request):
@@ -309,7 +344,15 @@ def junction_filter(request):
         junctions = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions, "filter_urls": filter_urls})
+
+    toolbar_max = min(junctions.number + 4, paginator.num_pages)
+    toolbar_min = min(junctions.number - 4, 0)
+
+    return render_to_response('bs_igdb/junction_list.html', {"junctions": junctions,
+                                                             "filter_urls": filter_urls,
+                                                             "paginator": paginator,
+                                                             "toolbar_max": toolbar_max,
+                                                             "toolbar_min": toolbar_min})
 
 
 def sequence_filter(request):
@@ -360,9 +403,6 @@ def sequence_filter(request):
 
     toolbar_max = min(sequences.number + 4, paginator.num_pages)
     toolbar_min = min(sequences.number - 4, 0)
-
-    print "Toolbar Max: " + toolbar_max
-    print "Toolbar Min: " + toolbar_min
 
     return render_to_response('bs_igdb/sequence_list.html', {"sequences": sequences,
                                                              "filter_urls": filter_urls,
@@ -434,7 +474,16 @@ def alignment_filter(request):
         alignments = paginator.page(1)
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
-    return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments, "filter_urls": filter_urls})
+
+
+    toolbar_max = min(alignments.number + 4, paginator.num_pages)
+    toolbar_min = min(alignments.number - 4, 0)
+
+    return render_to_response('bs_igdb/alignment_list.html', {"alignments": alignments,
+                                                              "filter_urls": filter_urls,
+                                                              "paginator": paginator,
+                                                              "toolbar_max": toolbar_max,
+                                                              "toolbar_min": toolbar_min})
 
 
 # -----------------------------------------------------------------------------------------------------
@@ -466,49 +515,49 @@ def search_result(request):
     headers = []
     for col in cur.description:
         headers.append(col[0])
-    # print cur.description
-    # print result_list
+        # print cur.description
+        # print result_list
 
 
 
 
-# result_list = IgBlastResult.objects.all()
-# print len(tables)
-# while x < len(tables):
-#     if tables[x] == "Summary":
-#
-#         # attribute = selection[x].decode('ascii', 'ignore')
-#         # print attribute
-#         # value = filter_on[x].decode('ascii', 'ignore')
-#         # name = get_full_model_name(attribute[0])
-#         # print name
-#         #
-#         # result_list = result_list.filter(igblast_summary__attribute=value)
-#         # summary_list = IgBlastSummary.objects.all()
-#         # paginator = Paginator(summary_list, 50)
-#         # page = request.GET.get('page')
-#         # try:
-#         #     summaries = paginator.page(page)
-#         # except PageNotAnInteger:
-#         #     summaries = paginator.page(1)
-#         # except EmptyPage:
-#         #     contacts = paginator.page(paginator.num_pages)
-#         x += 1
-#         # return render_to_response('bs_igdb/search_result.html', {"summaries": summaries})
-#     elif tables[x] == "Result":
-#         result_list = IgBlastResult.objects.filter(igblast_summary__isnull=False)
-#         paginator = Paginator(result_list, 50)
-#         page = request.GET.get('page')
-#         try:
-#             results = paginator.page(page)
-#         except PageNotAnInteger:
-#             results = paginator.page(1)
-#         except EmptyPage:
-#             contacts = paginator.page(paginator.num_pages)
-#         x += 1
-#         # return render_to_response('bs_igdb/sample_search.html', {"results": results})
-#     else:
-#         x += 1
+    # result_list = IgBlastResult.objects.all()
+    # print len(tables)
+    # while x < len(tables):
+    #     if tables[x] == "Summary":
+    #
+    #         # attribute = selection[x].decode('ascii', 'ignore')
+    #         # print attribute
+    #         # value = filter_on[x].decode('ascii', 'ignore')
+    #         # name = get_full_model_name(attribute[0])
+    #         # print name
+    #         #
+    #         # result_list = result_list.filter(igblast_summary__attribute=value)
+    #         # summary_list = IgBlastSummary.objects.all()
+    #         # paginator = Paginator(summary_list, 50)
+    #         # page = request.GET.get('page')
+    #         # try:
+    #         #     summaries = paginator.page(page)
+    #         # except PageNotAnInteger:
+    #         #     summaries = paginator.page(1)
+    #         # except EmptyPage:
+    #         #     contacts = paginator.page(paginator.num_pages)
+    #         x += 1
+    #         # return render_to_response('bs_igdb/search_result.html', {"summaries": summaries})
+    #     elif tables[x] == "Result":
+    #         result_list = IgBlastResult.objects.filter(igblast_summary__isnull=False)
+    #         paginator = Paginator(result_list, 50)
+    #         page = request.GET.get('page')
+    #         try:
+    #             results = paginator.page(page)
+    #         except PageNotAnInteger:
+    #             results = paginator.page(1)
+    #         except EmptyPage:
+    #             contacts = paginator.page(paginator.num_pages)
+    #         x += 1
+    #         # return render_to_response('bs_igdb/sample_search.html', {"results": results})
+    #     else:
+    #         x += 1
     paginator = Paginator(result_list, 50)
     page = request.GET.get('page')
     try:
@@ -518,9 +567,6 @@ def search_result(request):
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
     return render_to_response('bs_igdb/search_result.html', {"results": results, "headers": headers})
-
-
-
 # tables = request.GET.getlist('table_opts')
 # selection = request.GET.getlist('options')
 # print selection

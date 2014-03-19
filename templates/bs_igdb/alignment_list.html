@@ -80,22 +80,42 @@
             {% endfor %}
         </tbody>
     </table>
+    {#    <div class="pagination">#}
+    {#        <span class="step-links">#}
+    {#            {% if alignments.has_previous %}#}
+    {#                <a href="?page={{ align.previous_page_number }}">previous</a>#}
+    {#            {% endif %}#}
+    {##}
+    {#            <span class="current">#}
+    {#                Page {{ alignments.number }} of {{ alignments.paginator.num_pages }}.#}
+    {#            </span>#}
+    {##}
+    {#            {% if alignments.has_next %}#}
+    {#                <a href="?page={{ alignments.next_page_number }}">next</a>#}
+    {#            {% endif %}#}
+    {#        </span>#}
+    {#    </div>#}
     <div class="pagination">
         <span class="step-links">
             {% if alignments.has_previous %}
-                <a href="?page={{ align.previous_page_number }}">previous</a>
-            {% endif %}
+                <a href="?page={{  alignments.previous_page_number }}">&laquo;</a>
+            {%  endif %}
 
-            <span class="current">
-                Page {{ alignments.number }} of {{ alignments.paginator.num_pages }}.
-            </span>
+            {% for page in paginator.page_range %}
+                {% if page <= toolbar_max and page > toolbar_min and page != alignments.number %}
+                    <a href="?page={{  page  }}">{{ page }}</a>
+                {% elif page == alignments.number %}
+                    <span class="current">
+                        {{  alignments.number }}
+                    </span>
+                {% endif %}
+            {% endfor %}
 
             {% if alignments.has_next %}
-                <a href="?page={{ alignments.next_page_number }}">next</a>
+                <a href="?page={{ alignments.next_page_number }}">&raquo;</a>
             {% endif %}
         </span>
     </div>
-
 
 
 

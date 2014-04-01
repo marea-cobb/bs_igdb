@@ -10,6 +10,7 @@
         <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
 
+{#        When the 'add' button is clicked, the column is cloned and added to the bottom of the page. #}
         <script>
             $(document).ready(function() {
                 $("#add_table").click(function() {
@@ -20,6 +21,7 @@
             });
         </script>
 
+{#        When the 'remove' button is clicked, the last column is delected. #}
         <script>
             $(document).ready(function() {
                 $("#remove_table").click(function() {
@@ -28,6 +30,7 @@
             });
         </script>
 
+{#        When a new table is selected, the attribute dropdowns are redefined for the selected table. #}
         <script>
             $(document).ready(function() {
                 $("#table_opts").change(function() {
@@ -59,31 +62,9 @@
                     $.each(newOptions, function(key, value) {
                         $options.append($("<option></option>").attr("value", value).text(key));
                     });
-                    {#                    alert("Handler for .change() called." + tableVal + "is now selected.");#}
                 });
             });
         </script>
-
-{#        <script>#}
-{#            $(document).ready(function() {#}
-{#                $("#check").click(function() {#}
-                    {#                  alert("checkbox clicked");#}
-{#                    var checked = $(this).is(':checked');#}
-{#                    var str = jQuery.param( checked );#}
-{#                    $( "#check_results" ).text( str );#}
-{#                    $('.datalink').attr('href', function() {#}
-{#                        return this.href + '&checked=' + checked;#}
-{#                });#}
-                {#                var check_param = false;#}
-                {#                if($("#check").click(function() {#}
-                {#                    alert("box has been checked.")#}
-                {#                    check_param = true;#}
-                {#                    var str = jQuery.param( check_param );#}
-                {#                });#}
-                {#                $( "#check_results" ).text( str );#}
-{#            });#}
-{#        </script>#}
-
     </head>
 
 

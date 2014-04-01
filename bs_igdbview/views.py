@@ -1,11 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
+from django.http import HttpResponse
 from bs_igdbview.models import *
-from django.template import RequestContext, loader, Context
+from django.template import loader, Context
 from django.shortcuts import render_to_response
-from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from utils import build_orderby_urls, integer_filters
 from django.db import connection
-import psycopg2
+
 
 def index(request):
     result_list = IgBlastResult.objects.all()
@@ -13,7 +13,7 @@ def index(request):
     template = loader.get_template(template_name)
     c = Context({
         'result_list': result_list,
-        })
+            })
     return HttpResponse(template.render(c))
 
 
@@ -29,6 +29,8 @@ def dashboard(request):
 
 # Basic table views
 #----------------------------------------------------------------------------------------------------
+
+# Returns result page.
 def result(request):
     order_by = request.GET.get('order_by', 'result_id')
     result_list = IgBlastResult.objects.all().order_by(order_by)
@@ -38,7 +40,6 @@ def result(request):
 
     # Calls utils method to append new filters or order_by to the current url
     filter_urls = build_orderby_urls(request.get_full_path(), ["db_queried", "query", "length",
-                                                               # "igblast_summary_id", "junction_summary_id",
                                                                "alignment_summary_id", "sequence_id"])
     try:
         results = paginator.page(page)
@@ -57,6 +58,7 @@ def result(request):
                                                            "toolbar_min": toolbar_min})
 
 
+# Returns junction page.
 def junction(request):
     order_by = request.GET.get('order_by', 'junction_id')
     junction_list = JunctionSummary.objects.all().order_by(order_by)
@@ -83,6 +85,7 @@ def junction(request):
                                                              "toolbar_min": toolbar_min})
 
 
+# Returns summary page.
 def summary(request):
     order_by = request.GET.get('order_by', 'summary_id')
     summary_list = IgBlastSummary.objects.all().order_by(order_by)
@@ -109,6 +112,7 @@ def summary(request):
                                                             "toolbar_min": toolbar_min})
 
 
+# Returns sequence page.
 def sequence(request):
     order_by = request.GET.get('order_by', 'sequence_id')
     sequence_list = Sequence.objects.all().order_by(order_by)
@@ -136,6 +140,7 @@ def sequence(request):
                                                              "toolbar_min": toolbar_min})
 
 
+# Returns alignment page.
 def alignment(request):
     order_by = request.GET.get('order_by', 'alignment_id')
     alignment_list = AlignmentSummary.objects.all().order_by(order_by)
@@ -165,6 +170,8 @@ def alignment(request):
 
 # Filter functions
 #-----------------------------------------------------------------------------------------------------
+
+# Returns results with filter request.
 def result_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
@@ -233,6 +240,7 @@ def result_filter(request):
                                                            "toolbar_min": toolbar_min})
 
 
+# Returns summary results with filter request.
 def summary_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
@@ -300,6 +308,7 @@ def summary_filter(request):
                                                             "toolbar_min": toolbar_min})
 
 
+# Returns junction results with filter request.
 def junction_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
@@ -355,6 +364,7 @@ def junction_filter(request):
                                                              "toolbar_min": toolbar_min})
 
 
+# Returns sequence results with filter request.
 def sequence_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
@@ -411,6 +421,7 @@ def sequence_filter(request):
                                                              "toolbar_min": toolbar_min})
 
 
+# Returns alignment results with filter request.
 def alignment_filter(request):
     selection = request.GET.get('att')
     filter_on = request.GET.get('s')
@@ -475,7 +486,6 @@ def alignment_filter(request):
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
 
-
     toolbar_max = min(alignments.number + 4, paginator.num_pages)
     toolbar_min = min(alignments.number - 4, 0)
 
@@ -486,12 +496,16 @@ def alignment_filter(request):
                                                               "toolbar_min": toolbar_min})
 
 
+# Queries for full searches
 # -----------------------------------------------------------------------------------------------------
 
+# Loads the initial search page where user can define what tables and attributes to search on.
 def search(request):
     return render_to_response('bs_igdb/search.html')
 
 
+# The beginning of the cross-table queries, using raw SQL. (Currently not working).
+# A better design needs to be considered. Consider only allow certain queries that are predefined.
 def search_result(request):
     order_by = request.GET.get('order_by', 'result_id')
     tables = request.GET.getlist('table_opts')
@@ -503,61 +517,13 @@ def search_result(request):
 
     filter_on = request.GET.getlist('s')
     filter_on = [s.encode('ascii') for s in filter_on]
-    # for each in selection:
-    #     my_params[each.encode('ascii', 'ignore').lower()] = filter_on[position].encode('ascii', 'ignore')
-    #     position += 1
     cur = connection.cursor()
     query = 'SELECT * FROM %s' % tuple(tables)
     cur.execute(query)
-    # cur.execute('SELECT * FROM %s WHERE %s = %s',
-    #             [tuple(tables), tuple(selection), tuple(filter_on)])
     result_list = cur.fetchall()
     headers = []
     for col in cur.description:
         headers.append(col[0])
-        # print cur.description
-        # print result_list
-
-
-
-
-    # result_list = IgBlastResult.objects.all()
-    # print len(tables)
-    # while x < len(tables):
-    #     if tables[x] == "Summary":
-    #
-    #         # attribute = selection[x].decode('ascii', 'ignore')
-    #         # print attribute
-    #         # value = filter_on[x].decode('ascii', 'ignore')
-    #         # name = get_full_model_name(attribute[0])
-    #         # print name
-    #         #
-    #         # result_list = result_list.filter(igblast_summary__attribute=value)
-    #         # summary_list = IgBlastSummary.objects.all()
-    #         # paginator = Paginator(summary_list, 50)
-    #         # page = request.GET.get('page')
-    #         # try:
-    #         #     summaries = paginator.page(page)
-    #         # except PageNotAnInteger:
-    #         #     summaries = paginator.page(1)
-    #         # except EmptyPage:
-    #         #     contacts = paginator.page(paginator.num_pages)
-    #         x += 1
-    #         # return render_to_response('bs_igdb/search_result.html', {"summaries": summaries})
-    #     elif tables[x] == "Result":
-    #         result_list = IgBlastResult.objects.filter(igblast_summary__isnull=False)
-    #         paginator = Paginator(result_list, 50)
-    #         page = request.GET.get('page')
-    #         try:
-    #             results = paginator.page(page)
-    #         except PageNotAnInteger:
-    #             results = paginator.page(1)
-    #         except EmptyPage:
-    #             contacts = paginator.page(paginator.num_pages)
-    #         x += 1
-    #         # return render_to_response('bs_igdb/sample_search.html', {"results": results})
-    #     else:
-    #         x += 1
     paginator = Paginator(result_list, 50)
     page = request.GET.get('page')
     try:
@@ -567,49 +533,6 @@ def search_result(request):
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
     return render_to_response('bs_igdb/search_result.html', {"results": results, "headers": headers})
-# tables = request.GET.getlist('table_opts')
-# selection = request.GET.getlist('options')
-# print selection
-# filter_on = request.GET.getlist('s')
-# # check = request.GET.getParameter('check')
-# # checks = request.GET.getlist('checked')
-# position = 0
-# my_params = {}
-# for each in selection:
-#     my_params[each.encode('ascii', 'ignore').lower()] = filter_on[position].encode('ascii', 'ignore')
-#     position += 1
-# for each in tables:
-#     query.append((each.encode('ascii', 'ignore'), selection[num_conditions].encode('ascii', 'ignore'), filter_on[num_conditions].encode('ascii', 'ignore')))
-#     num_conditions += 1
-# iterator = 0
-# num_tables = len(tables)
-# print num_tables
-# while iterator < num_tables:
-#     if iterator == 0:
-#         name = get_full_model_name(tables[0])
-#         model = get_model('bs_igdbview', name)
-#         # base = model.objects.all()
-#         # result = get_model('bs_igdbview', get_full_model_name(tables[1]))
-#         base = model.objects.select_related().get(my_params)
-#         print base
-#         iterator += 1
-#     else:
-#         name = get_full_model_name(tables[iterator])
-#         model = get_model('bs_igdbview', name)
-#         for keys, values in my_params.items():
-#             print(keys)
-#             print(values)
-#         iterator += 1
-# each.objects.all().filter["%s = %s"], params=[selection[position], filter_on[position]])
-# SQL_statement = "SELECT * FROM %s WHERE %s = %s", (each, selection[position], filter_on[position])
-
-
-# if request.GET.get('check', False):
-#     check = check.append(False)
-# else:
-#     check = check.append(True)
-# for each in selection:
-#     return render_to_response('bs_igdb/search_result.html')
 
 
 def get_full_model_name(model):

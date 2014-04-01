@@ -11,7 +11,7 @@ AUTH_PROFILE_MODULE = 'bs_igdbview.UserProfile'
 # GRAPPELLI_ADMIN_TITLE='bs_igdb: Stamatatos Lab Immunogen database'
 
 ADMINS = (
-('Marea Cobb', 'marea.cobb@seattlebiomed.org'),
+    ('Marea Cobb', 'marea.cobb@seattlebiomed.org'),
 )
 
 MANAGERS = ADMINS
@@ -92,7 +92,10 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-#read via env variable in host specific settings file eg igdb.settings.igdb
+# Read via virtual environment activate file and .bashrc.
+# Add 'export DJANGO_SETTINGS_MODULE=bs_igdb.settings.settings' to activate file.
+# Add 'export DJANGO_SECRET_KEY='=08ozj^r)dqj@&@e8r_r2&)u375aie$@f)m!pewc74u$z3meat'' to .bashrc
+# Secret key can be changed to anything.
 #SECRET_KEY = ''
 
 
@@ -147,19 +150,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django_tables2',
-    # 'grappelli',
-    # 'django_admin_bootstrapped',
-    # 'django_admin_bootstrapped.bootstrap3',
+    'south',
+    'bs_igdbview',
+    'django.contrib.humanize',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'south',
-    'bs_igdbview',
-    'django.contrib.humanize',
-    'django_tables2'
-    # 'gunicorn',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
